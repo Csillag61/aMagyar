@@ -1,0 +1,284 @@
+{
+  "vocabulary": [
+    {
+      "id": 1,
+      "word": "alma",
+      "translation": "apple",
+      "ipa": "ˈɒlmɒ",
+      "audioFile": "audio/alma.mp3",
+      "exampleSentence": "Eszem egy almát.",
+      "exampleTranslation": "I eat an apple.",
+      "tags": ["food", "noun", "beginner"],
+      "relatedForms": {
+        "plural": "almák",
+        "accusative": "almát"
+      },
+      "level": 1
+    },
+    {
+      "id": 2,
+      "word": "ház",
+      "translation": "house",
+      "ipa": "ˈhaːz",
+      "audioFile": "audio/haz.mp3",
+      "exampleSentence": "A ház nagy.",
+      "exampleTranslation": "The house is big.",
+      "tags": ["building", "noun", "beginner"],
+      "relatedForms": {
+        "plural": "házak",
+        "inessive": "házban",
+        "possessive1sg": "házam"
+      },
+      "level": 1
+    },
+    {
+      "id": 3,
+      "word": "szia",
+      "translation": "hi / bye (informal)",
+      "ipa": "ˈsiɒ",
+      "audioFile": "audio/szia.mp3",
+      "exampleSentence": "Szia! Hogy vagy?",
+      "exampleTranslation": "Hi! How are you?",
+      "tags": ["greeting", "beginner"],
+      "relatedForms": {
+        "formal": "viszontlátásra"
+      },
+      "level": 1
+    },
+    {
+      "id": 4,
+      "word": "köszönöm",
+      "translation": "thank you",
+      "ipa": "ˈkøsønøm",
+      "audioFile": "audio/koszonom.mp3",
+      "exampleSentence": "Köszönöm szépen!",
+      "exampleTranslation": "Thank you very much!",
+      "tags": ["greeting", "phrase", "beginner"],
+      "relatedForms": {
+        "short": "köszi",
+        "formal": "köszönöm szépen"
+      },
+      "level": 1
+    },
+    {
+      "id": 5,
+      "word": "víz",
+      "translation": "water",
+      "ipa": "ˈviːz",
+      "audioFile": "audio/viz.mp3",
+      "exampleSentence": "Iszom egy pohár vizet.",
+      "exampleTranslation": "I drink a glass of water.",
+      "tags": ["drink", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "vizet"
+      },
+      "level": 1
+    },
+    {
+      "id": 6,
+      "word": "egy",
+      "translation": "one / a/an",
+      "ipa": "ˈɛɟ",
+      "audioFile": "audio/egy.mp3",
+      "exampleSentence": "Egy könyv van az asztalon.",
+      "exampleTranslation": "A book is on the table.",
+      "tags": ["number", "article", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 7,
+      "word": "kettő",
+      "translation": "two",
+      "ipa": "ˈkɛtːøː",
+      "audioFile": "audio/ketto.mp3",
+      "exampleSentence": "Két almát veszek.",
+      "exampleTranslation": "I buy two apples.",
+      "tags": ["number", "beginner"],
+      "relatedForms": {
+        "attributive": "két"
+      },
+      "level": 1
+    },
+    {
+      "id": 8,
+      "word": "három",
+      "translation": "three",
+      "ipa": "ˈhaːrom",
+      "audioFile": "audio/harom.mp3",
+      "exampleSentence": "Három könyv van itt.",
+      "exampleTranslation": "There are three books here.",
+      "tags": ["number", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 9,
+      "word": "eszik",
+      "translation": "to eat",
+      "ipa": "ˈɛsik",
+      "audioFile": "audio/eszik.mp3",
+      "exampleSentence": "Péter eszik egy szendvicset.",
+      "exampleTranslation": "Peter eats a sandwich.",
+      "tags": ["verb", "basic-verb", "beginner"],
+      "relatedForms": {
+        "1sg": "eszem",
+        "2sg": "eszel",
+        "3sg": "eszik",
+        "1pl": "eszünk",
+        "2pl": "esztek",
+        "3pl": "esznek"
+      },
+      "level": 1
+    },
+    {
+      "id": 10,
+      "word": "iszik",
+      "translation": "to drink",
+      "ipa": "ˈisik",
+      "audioFile": "audio/iszik.mp3",
+      "exampleSentence": "Anna teát iszik.",
+      "exampleTranslation": "Anna drinks tea.",
+      "tags": ["verb", "basic-verb", "beginner"],
+      "relatedForms": {
+        "1sg": "iszom",
+        "2sg": "iszol",
+        "3sg": "iszik",
+        "1pl": "iszunk",
+        "2pl": "isztok",
+        "3pl": "isznak"
+      },
+      "level": 1
+    },
+    {
+      "id": 11,
+      "word": "piros",
+      "translation": "red",
+      "ipa": "ˈpiroʃ",
+      "audioFile": "audio/piros.mp3",
+      "exampleSentence": "A piros alma édes.",
+      "exampleTranslation": "The red apple is sweet.",
+      "tags": ["color", "adjective", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 12,
+      "word": "kék",
+      "translation": "blue",
+      "ipa": "ˈkeːk",
+      "audioFile": "audio/kek.mp3",
+      "exampleSentence": "A kék ég szép.",
+      "exampleTranslation": "The blue sky is beautiful.",
+      "tags": ["color", "adjective", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 13,
+      "word": "anya",
+      "translation": "mother",
+      "ipa": "ˈɒɲɒ",
+      "audioFile": "audio/anya.mp3",
+      "exampleSentence": "Az anyám kedves.",
+      "exampleTranslation": "My mother is kind.",
+      "tags": ["family", "noun", "beginner"],
+      "relatedForms": {
+        "possessive1sg": "anyám"
+      },
+      "level": 1
+    },
+    {
+      "id": 14,
+      "word": "apa",
+      "translation": "father",
+      "ipa": "ˈɒpɒ",
+      "audioFile": "audio/apa.mp3",
+      "exampleSentence": "Az apám dolgozik.",
+      "exampleTranslation": "My father works.",
+      "tags": ["family", "noun", "beginner"],
+      "relatedForms": {
+        "possessive1sg": "apám"
+      },
+      "level": 1
+    },
+    {
+      "id": 15,
+      "word": "jobb",
+      "translation": "right (direction)",
+      "ipa": "ˈjobː",
+      "audioFile": "audio/jobb.mp3",
+      "exampleSentence": "Fordulj jobbra!",
+      "exampleTranslation": "Turn right!",
+      "tags": ["direction", "adjective", "beginner"],
+      "relatedForms": {
+        "sublative": "jobbra"
+      },
+      "level": 1
+    },
+    {
+      "id": 16,
+      "word": "bal",
+      "translation": "left (direction)",
+      "ipa": "ˈbɒl",
+      "audioFile": "audio/bal.mp3",
+      "exampleSentence": "Fordulj balra!",
+      "exampleTranslation": "Turn left!",
+      "tags": ["direction", "adjective", "beginner"],
+      "relatedForms": {
+        "sublative": "balra"
+      },
+      "level": 1
+    },
+    {
+      "id": 17,
+      "word": "boldog",
+      "translation": "happy",
+      "ipa": "ˈboldog",
+      "audioFile": "audio/boldog.mp3",
+      "exampleSentence": "Boldog vagyok.",
+      "exampleTranslation": "I am happy.",
+      "tags": ["emotion", "adjective", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 18,
+      "word": "szomorú",
+      "translation": "sad",
+      "ipa": "ˈsomoru",
+      "audioFile": "audio/szomoru.mp3",
+      "exampleSentence": "Miért vagy szomorú?",
+      "exampleTranslation": "Why are you sad?",
+      "tags": ["emotion", "adjective", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 19,
+      "word": "nap",
+      "translation": "day / sun",
+      "ipa": "ˈnɒp",
+      "audioFile": "audio/nap.mp3",
+      "exampleSentence": "Ma szép nap van.",
+      "exampleTranslation": "Today is a beautiful day.",
+      "tags": ["time", "weather", "noun", "beginner"],
+      "relatedForms": {
+        "plural": "napok"
+      },
+      "level": 1
+    },
+    {
+      "id": 20,
+      "word": "idő",
+      "translation": "time / weather",
+      "ipa": "ˈidøː",
+      "audioFile": "audio/ido.mp3",
+      "exampleSentence": "Milyen az idő?",
+      "exampleTranslation": "What's the weather like?",
+      "tags": ["time", "weather", "noun", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    }
+  ]
+}

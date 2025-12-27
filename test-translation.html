@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation API Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #E63946;
+            text-align: center;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #457B9D;
+        }
+        .test-section h2 {
+            color: #457B9D;
+            margin-bottom: 15px;
+        }
+        button {
+            background: #457B9D;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2a5a7a;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 2px solid #dee2e6;
+        }
+        .success {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        .error {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        pre {
+            background: #1d3557;
+            color: #f1faee;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        .status {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 LibreTranslate API Test Suite</h1>
+        <p style="text-align: center; color: #6c757d;">
+            Testing the translation API integration for aMagyar app
+        </p>
+
+        <!-- Test 1: Connection Test -->
+        <div class="test-section">
+            <h2>1. Connection Test</h2>
+            <p>Verify API endpoint is reachable</p>
+            <button onclick="runConnectionTest()">Run Test</button>
+            <div id="test1-result"></div>
+        </div>
+
+        <!-- Test 2: Simple Translation -->
+        <div class="test-section">
+            <h2>2. Simple Translation (HU → EN)</h2>
+            <p>Translate "Szia, hogy vagy?" to English</p>
+            <button onclick="runSimpleTranslation()">Run Test</button>
+            <div id="test2-result"></div>
+        </div>
+
+        <!-- Test 3: Auto-detect -->
+        <div class="test-section">
+            <h2>3. Language Auto-detection</h2>
+            <p>Auto-detect language and translate</p>
+            <button onclick="runAutoDetect()">Run Test</button>
+            <div id="test3-result"></div>
+        </div>
+
+        <!-- Test 4: Cache Test -->
+        <div class="test-section">
+            <h2>4. Cache Performance</h2>
+            <p>Translate same text twice to test caching</p>
+            <button onclick="runCacheTest()">Run Test</button>
+            <div id="test4-result"></div>
+        </div>
+
+        <!-- Test 5: Batch Translation -->
+        <div class="test-section">
+            <h2>5. Batch Translation</h2>
+            <p>Translate multiple Hungarian greetings at once</p>
+            <button onclick="runBatchTest()">Run Test</button>
+            <div id="test5-result"></div>
+        </div>
+
+        <!-- Test 6: Error Handling -->
+        <div class="test-section">
+            <h2>6. Error Handling</h2>
+            <p>Test with invalid input</p>
+            <button onclick="runErrorTest()">Run Test</button>
+            <div id="test6-result"></div>
+        </div>
+
+        <!-- API Stats -->
+        <div class="test-section">
+            <h2>📊 API Statistics</h2>
+            <div id="api-stats">
+                <p>Click "Update Stats" to see current status</p>
+            </div>
+            <button onclick="updateStats()">Update Stats</button>
+        </div>
+    </div>
+
+    <script src="translate-api.js"></script>
+    <script>
+        // Test 1: Connection Test
+        async function runConnectionTest() {
+            const resultDiv = document.getElementById('test1-result');
+            resultDiv.innerHTML = '<div class="result">⏳ Testing connection...</div>';
+            
+            try {
+                const result = await translator.testConnection();
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+                            <div class="status">✅ Connection Successful</div>
+                            <p><strong>Endpoint:</strong> ${result.endpoint}</p>
+                            <p><strong>Test Translation:</strong> "Hello" → "${result.testTranslation}"</p>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <div class="status">❌ Connection Failed</div>
+                            <p>${result.error}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <div class="status">❌ Error</div>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Test 2: Simple Translation
+        async function runSimpleTranslation() {
+            const resultDiv = document.getElementById('test2-result');
+            resultDiv.innerHTML = '<div class="result">⏳ Translating...</div>';
+            
+            try {
+                const start = performance.now();
+                const result = await translator.translate('Szia, hogy vagy?', 'hu', 'en');
+                const duration = (performance.now() - start).toFixed(0);
+                
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <div class="status">✅ Translation Successful</div>
+                        <p><strong>Original:</strong> Szia, hogy vagy?</p>
+                        <p><strong>Translation:</strong> ${result.translatedText}</p>
+                        <p><strong>Time:</strong> ${duration}ms</p>
+                        <p><strong>Cached:</strong> ${result.cached ? 'Yes ⚡' : 'No 🌐'}</p>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <div class="status">❌ Translation Failed</div>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Test 3: Auto-detect
+        async function runAutoDetect() {
+            const resultDiv = document.getElementById('test3-result');
+            resultDiv.innerHTML = '<div class="result">⏳ Detecting and translating...</div>';
+            
+            try {
+                const result = await translator.translate('Köszönöm szépen!', 'auto', 'en');
+                
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <div class="status">✅ Auto-detection Successful</div>
+                        <p><strong>Original:</strong> Köszönöm szépen!</p>
+                        <p><strong>Detected Language:</strong> ${result.sourceLang}</p>
+                        <p><strong>Translation:</strong> ${result.translatedText}</p>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <div class="status">❌ Error</div>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Test 4: Cache Performance
+        async function runCacheTest() {
+            const resultDiv = document.getElementById('test4-result');
+            resultDiv.innerHTML = '<div class="result">⏳ Running cache test...</div>';
+            
+            try {
+                // First translation (should be live)
+                const start1 = performance.now();
+                const result1 = await translator.translate('A kutya alszik', 'hu', 'en');
+                const duration1 = (performance.now() - start1).toFixed(0);
+                
+                // Second translation (should be cached)
+                const start2 = performance.now();
+                const result2 = await translator.translate('A kutya alszik', 'hu', 'en');
+                const duration2 = (performance.now() - start2).toFixed(0);
+                
+                const speedup = (duration1 / duration2).toFixed(1);
+                
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <div class="status">✅ Cache Test Complete</div>
+                        <p><strong>Translation:</strong> "${result1.translatedText}"</p>
+                        <p><strong>First call:</strong> ${duration1}ms (Live ${result1.cached ? '❌' : '✅'})</p>
+                        <p><strong>Second call:</strong> ${duration2}ms (Cached ${result2.cached ? '✅' : '❌'})</p>
+                        <p><strong>Speed improvement:</strong> ${speedup}x faster!</p>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <div class="status">❌ Error</div>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Test 5: Batch Translation
+        async function runBatchTest() {
+            const resultDiv = document.getElementById('test5-result');
+            resultDiv.innerHTML = '<div class="result">⏳ Batch translating...</div>';
+            
+            try {
+                const phrases = [
+                    'Jó reggelt!',
+                    'Jó napot!',
+                    'Jó estét!',
+                    'Jó éjszakát!'
+                ];
+                
+                const results = await translator.translateBatch(phrases, 'hu', 'en');
+                
+                let html = '<div class="result success"><div class="status">✅ Batch Translation Complete</div>';
+                results.forEach((result, idx) => {
+                    if (result.success) {
+                        html += `<p>${idx + 1}. "${result.original}" → "${result.translatedText}"</p>`;
+                    } else {
+                        html += `<p>${idx + 1}. "${result.original}" → ❌ ${result.error}</p>`;
+                    }
+                });
+                html += '</div>';
+                
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <div class="status">❌ Error</div>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Test 6: Error Handling
+        async function runErrorTest() {
+            const resultDiv = document.getElementById('test6-result');
+            resultDiv.innerHTML = '<div class="result">⏳ Testing error handling...</div>';
+            
+            try {
+                // Try to translate empty string
+                await translator.translate('', 'hu', 'en');
+                
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <div class="status">❌ Test Failed</div>
+                        <p>Should have thrown an error for empty string</p>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <div class="status">✅ Error Handling Works</div>
+                        <p><strong>Expected error caught:</strong> ${error.message}</p>
+                        <p>The API correctly validates input and throws errors for empty text.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Update Stats
+        function updateStats() {
+            const statsDiv = document.getElementById('api-stats');
+            const stats = translator.getCacheStats();
+            
+            statsDiv.innerHTML = `
+                <div class="result">
+                    <p><strong>Current Endpoint:</strong> ${translator.getCurrentEndpoint()}</p>
+                    <p><strong>Cache Size:</strong> ${stats.size} / ${stats.maxSize} items</p>
+                    <p><strong>Cache Status:</strong> ${stats.hitRate}</p>
+                    <p><strong>Total Endpoints:</strong> ${translator.endpoints.length}</p>
+                </div>
+            `;
+        }
+
+        // Initialize
+        console.log('🧪 Translation API Test Suite Loaded');
+        console.log('Click the buttons to run tests!');
+    </script>
+</body>
+</html>

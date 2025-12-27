@@ -1,0 +1,380 @@
+{
+  "lessons": [
+    {
+      "id": 1,
+      "title": "Greetings & Introductions",
+      "level": 1,
+      "order": 1,
+      "description": "Learn basic Hungarian greetings and how to introduce yourself",
+      "vocabularyIds": [3, 4],
+      "grammarIds": [7, 9],
+      "phrases": [
+        {
+          "hungarian": "Szia!",
+          "english": "Hi! / Bye!",
+          "usage": "Informal greeting/farewell"
+        },
+        {
+          "hungarian": "Jó napot!",
+          "english": "Good day!",
+          "usage": "Formal greeting"
+        },
+        {
+          "hungarian": "Hogy vagy?",
+          "english": "How are you?",
+          "usage": "Informal"
+        },
+        {
+          "hungarian": "Köszönöm, jól.",
+          "english": "Thank you, I'm well.",
+          "usage": "Standard response"
+        }
+      ],
+      "story": {
+        "title": "Meeting Péter",
+        "content": "Szia! Én vagyok Péter. Hogy vagy? Jól vagyok, köszönöm. És te? Én is jól vagyok.",
+        "translation": "Hi! I am Peter. How are you? I'm well, thank you. And you? I am also well."
+      },
+      "quiz": [
+        {
+          "type": "multiple-choice",
+          "question": "How do you say 'Thank you' in Hungarian?",
+          "options": ["Szia", "Köszönöm", "Jól", "Vagyok"],
+          "correct": "Köszönöm"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Food & Drink",
+      "level": 1,
+      "order": 2,
+      "description": "Common food words and basic verb conjugation for eating/drinking",
+      "vocabularyIds": [1, 5, 9, 10],
+      "grammarIds": [2, 5],
+      "phrases": [
+        {
+          "hungarian": "Éhes vagyok.",
+          "english": "I am hungry.",
+          "usage": "Expressing hunger"
+        },
+        {
+          "hungarian": "Szomjas vagyok.",
+          "english": "I am thirsty.",
+          "usage": "Expressing thirst"
+        },
+        {
+          "hungarian": "Jó étvágyat!",
+          "english": "Bon appétit!",
+          "usage": "Before eating"
+        }
+      ],
+      "story": {
+        "title": "At the Market",
+        "content": "Péter a piacon van. Vásárol egy almát és egy vizet. Éhes és szomjas. Eszi az almát és issza a vizet. Finom!",
+        "translation": "Peter is at the market. He buys an apple and water. He is hungry and thirsty. He eats the apple and drinks the water. Delicious!"
+      },
+      "quiz": [
+        {
+          "type": "fill-blank",
+          "question": "Eszem egy ____. (I eat an apple)",
+          "correct": "almát",
+          "hint": "Need accusative case"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Numbers 1-10",
+      "level": 1,
+      "order": 3,
+      "description": "Learn to count from 1 to 10 in Hungarian",
+      "vocabularyIds": [6, 7, 8],
+      "grammarIds": [3],
+      "phrases": [
+        {
+          "hungarian": "egy, kettő, három, négy, öt",
+          "english": "one, two, three, four, five",
+          "usage": "First five numbers"
+        },
+        {
+          "hungarian": "hat, hét, nyolc, kilenc, tíz",
+          "english": "six, seven, eight, nine, ten",
+          "usage": "Next five numbers"
+        },
+        {
+          "hungarian": "Hány éves vagy?",
+          "english": "How old are you?",
+          "usage": "Asking age"
+        }
+      ],
+      "story": {
+        "title": "Counting Apples",
+        "content": "Egy alma. Két alma. Három alma. Hány alma van? Öt alma van az asztalon.",
+        "translation": "One apple. Two apples. Three apples. How many apples are there? Five apples are on the table."
+      },
+      "quiz": [
+        {
+          "type": "multiple-choice",
+          "question": "What is 'three' in Hungarian?",
+          "options": ["egy", "kettő", "három", "négy"],
+          "correct": "három"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Basic Verbs",
+      "level": 1,
+      "order": 4,
+      "description": "Essential action verbs and simple conjugation",
+      "vocabularyIds": [9, 10],
+      "grammarIds": [5, 9],
+      "phrases": [
+        {
+          "hungarian": "Mit csinálsz?",
+          "english": "What are you doing?",
+          "usage": "Asking about activities"
+        },
+        {
+          "hungarian": "Tanulok magyarul.",
+          "english": "I'm learning Hungarian.",
+          "usage": "Describing activity"
+        }
+      ],
+      "story": {
+        "title": "Daily Routine",
+        "content": "Reggel eszem. Délelőtt dolgozom. Délután tanulok. Este iszom egy teát. Éjszaka alszom.",
+        "translation": "In the morning I eat. In the morning I work. In the afternoon I study. In the evening I drink tea. At night I sleep."
+      },
+      "quiz": [
+        {
+          "type": "conjugate",
+          "question": "Conjugate 'eszik' (to eat) for 'I'",
+          "correct": "eszem"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Family Members",
+      "level": 1,
+      "order": 5,
+      "description": "Family vocabulary with possessive suffixes",
+      "vocabularyIds": [13, 14],
+      "grammarIds": [4],
+      "phrases": [
+        {
+          "hungarian": "Ez az anyám.",
+          "english": "This is my mother.",
+          "usage": "Introducing family"
+        },
+        {
+          "hungarian": "Az az apám.",
+          "english": "That is my father.",
+          "usage": "Pointing out family"
+        }
+      ],
+      "story": {
+        "title": "My Family",
+        "content": "A családom nagy. Van anyám, apám, és egy testvérem. Az anyám kedves. Az apám dolgozik. A testvérem tanul.",
+        "translation": "My family is big. I have my mother, my father, and one sibling. My mother is kind. My father works. My sibling studies."
+      },
+      "quiz": [
+        {
+          "type": "transform",
+          "question": "Add 'my' to 'anya' (mother)",
+          "correct": "anyám"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Colors",
+      "level": 1,
+      "order": 6,
+      "description": "Basic color vocabulary and adjective usage",
+      "vocabularyIds": [11, 12],
+      "grammarIds": [8],
+      "phrases": [
+        {
+          "hungarian": "Milyen színű?",
+          "english": "What color is it?",
+          "usage": "Asking about color"
+        },
+        {
+          "hungarian": "A piros alma.",
+          "english": "The red apple.",
+          "usage": "Describing with color"
+        }
+      ],
+      "story": {
+        "title": "Colors Around Us",
+        "content": "Az ég kék. Az alma piros. A fű zöld. A nap sárga. Sok szín van!",
+        "translation": "The sky is blue. The apple is red. The grass is green. The sun is yellow. There are many colors!"
+      },
+      "quiz": [
+        {
+          "type": "multiple-choice",
+          "question": "What is 'blue' in Hungarian?",
+          "options": ["piros", "kék", "zöld", "sárga"],
+          "correct": "kék"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Directions",
+      "level": 1,
+      "order": 7,
+      "description": "Left, right, and basic directional words",
+      "vocabularyIds": [15, 16],
+      "grammarIds": [6],
+      "phrases": [
+        {
+          "hungarian": "Fordulj jobbra!",
+          "english": "Turn right!",
+          "usage": "Giving directions"
+        },
+        {
+          "hungarian": "Menj balra!",
+          "english": "Go left!",
+          "usage": "Giving directions"
+        },
+        {
+          "hungarian": "Menj egyenesen!",
+          "english": "Go straight!",
+          "usage": "Giving directions"
+        }
+      ],
+      "story": {
+        "title": "Finding the Park",
+        "content": "Hol van a park? Menj egyenesen. Aztán fordulj jobbra. A park ott van, balra.",
+        "translation": "Where is the park? Go straight. Then turn right. The park is there, on the left."
+      },
+      "quiz": [
+        {
+          "type": "multiple-choice",
+          "question": "What does 'jobbra' mean?",
+          "options": ["left", "right", "straight", "back"],
+          "correct": "right"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Time & Days",
+      "level": 1,
+      "order": 8,
+      "description": "Telling time and days of the week basics",
+      "vocabularyIds": [19, 20],
+      "grammarIds": [10],
+      "phrases": [
+        {
+          "hungarian": "Hány óra van?",
+          "english": "What time is it?",
+          "usage": "Asking the time"
+        },
+        {
+          "hungarian": "Ma hétfő van.",
+          "english": "Today is Monday.",
+          "usage": "Stating the day"
+        },
+        {
+          "hungarian": "Mikor?",
+          "english": "When?",
+          "usage": "Asking about time"
+        }
+      ],
+      "story": {
+        "title": "Today's Plan",
+        "content": "Ma hétfő van. Reggel nyolc óra van. Dolgoznom kell. Délután három órakor tanulok. Este hat órakor eszem.",
+        "translation": "Today is Monday. It's eight o'clock in the morning. I have to work. At three in the afternoon I study. At six in the evening I eat."
+      },
+      "quiz": [
+        {
+          "type": "translate",
+          "question": "Translate: What time is it?",
+          "correct": "Hány óra van?"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Weather",
+      "level": 1,
+      "order": 9,
+      "description": "Weather expressions and descriptions",
+      "vocabularyIds": [19, 20],
+      "grammarIds": [1, 9],
+      "phrases": [
+        {
+          "hungarian": "Milyen az idő?",
+          "english": "What's the weather like?",
+          "usage": "Asking about weather"
+        },
+        {
+          "hungarian": "Szép idő van.",
+          "english": "The weather is nice.",
+          "usage": "Describing weather"
+        },
+        {
+          "hungarian": "Esik az eső.",
+          "english": "It's raining.",
+          "usage": "Weather condition"
+        }
+      ],
+      "story": {
+        "title": "A Beautiful Day",
+        "content": "Ma szép idő van. A nap süt. Az ég kék. Nem esik az eső. Jó nap a parkban sétálni.",
+        "translation": "Today the weather is nice. The sun is shining. The sky is blue. It's not raining. It's a good day to walk in the park."
+      },
+      "quiz": [
+        {
+          "type": "multiple-choice",
+          "question": "How do you say 'The weather is nice'?",
+          "options": ["Esik az eső", "Szép idő van", "Hideg van", "Meleg van"],
+          "correct": "Szép idő van"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Emotions & Feelings",
+      "level": 1,
+      "order": 10,
+      "description": "Expressing how you feel",
+      "vocabularyIds": [17, 18],
+      "grammarIds": [7, 10],
+      "phrases": [
+        {
+          "hungarian": "Boldog vagyok.",
+          "english": "I am happy.",
+          "usage": "Expressing happiness"
+        },
+        {
+          "hungarian": "Szomorú vagyok.",
+          "english": "I am sad.",
+          "usage": "Expressing sadness"
+        },
+        {
+          "hungarian": "Hogy érzed magad?",
+          "english": "How do you feel?",
+          "usage": "Asking about feelings"
+        }
+      ],
+      "story": {
+        "title": "Feelings Change",
+        "content": "Reggel boldog vagyok. A nap süt. Délben szomjas vagyok. Iszom vizet. Este fáradt vagyok. Most boldog vagyok.",
+        "translation": "In the morning I am happy. The sun is shining. At noon I am thirsty. I drink water. In the evening I am tired. Now I am happy."
+      },
+      "quiz": [
+        {
+          "type": "translate",
+          "question": "Translate to Hungarian: I am happy",
+          "correct": "Boldog vagyok"
+        }
+      ]
+    }
+  ]
+}

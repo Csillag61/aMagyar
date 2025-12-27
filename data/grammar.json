@@ -1,0 +1,380 @@
+{
+  "grammarTopics": [
+    {
+      "id": 1,
+      "topic": "Vowel Harmony",
+      "level": 1,
+      "category": "foundation",
+      "colorCode": "#FF6B6B",
+      "explanation": "Hungarian has vowel harmony - suffixes change based on the vowels in the word. There are front vowels (e, é, i, í, ö, ő, ü, ű) and back vowels (a, á, o, ó, u, ú).",
+      "rules": [
+        "Back vowel words (a, á, o, ó, u, ú) take back vowel suffixes",
+        "Front vowel words (e, é, i, í, ö, ő, ü, ű) take front vowel suffixes",
+        "Mixed words usually follow the last vowel"
+      ],
+      "patterns": [
+        {
+          "base": "ház (house - back vowels)",
+          "examples": ["házban (in the house)", "háznak (to the house)"]
+        },
+        {
+          "base": "kéz (hand - front vowels)",
+          "examples": ["kézben (in the hand)", "kéznek (to the hand)"]
+        }
+      ],
+      "exercises": [
+        {
+          "type": "choose-suffix",
+          "question": "Fill in: A macská a ház_____ van. (The cat is in the house)",
+          "options": ["ban", "ben"],
+          "correct": "ban",
+          "explanation": "ház has back vowels (á), so use -ban"
+        }
+      ],
+      "miniStory": "Ez egy ház. A ház nagy. Péter a házban van."
+    },
+    {
+      "id": 2,
+      "topic": "Accusative Case (-t, -ot, -et, -öt)",
+      "level": 1,
+      "category": "cases",
+      "colorCode": "#4ECDC4",
+      "explanation": "The accusative case marks the direct object of a verb. Add -t (or -ot/-et/-öt) to the noun.",
+      "rules": [
+        "If the word ends in a vowel, usually just add -t",
+        "If it ends in a consonant, add -ot/-et/-öt (vowel harmony)",
+        "Some words need linking vowels: a→át, e→ét"
+      ],
+      "patterns": [
+        {
+          "base": "alma (apple)",
+          "examples": ["almát (apple-ACC)", "Eszem egy almát. (I eat an apple)"]
+        },
+        {
+          "base": "ház (house)",
+          "examples": ["házat (house-ACC)", "Látom a házat. (I see the house)"]
+        },
+        {
+          "base": "víz (water)",
+          "examples": ["vizet (water-ACC)", "Iszom vizet. (I drink water)"]
+        }
+      ],
+      "exercises": [
+        {
+          "type": "transform",
+          "question": "Add accusative: könyv (book)",
+          "correct": "könyvet",
+          "explanation": "könyv ends in consonant, use -et (front vowel harmony)"
+        }
+      ],
+      "miniStory": "Anna lát egy almát. Vesz egy almát. Eszi az almát."
+    },
+    {
+      "id": 3,
+      "topic": "Plural (-k)",
+      "level": 1,
+      "category": "noun-suffixes",
+      "colorCode": "#95E1D3",
+      "explanation": "To make a noun plural, add -k. Sometimes you need a linking vowel before -k.",
+      "rules": [
+        "If word ends in vowel: just add -k",
+        "If word ends in consonant: add -ok/-ek/-ök (vowel harmony)",
+        "After accusative: first plural, then accusative (ház → házak → házakat)"
+      ],
+      "patterns": [
+        {
+          "base": "alma → almák",
+          "examples": ["két almák (wrong!)", "két alma (two apples - no plural with numbers!)"]
+        },
+        {
+          "base": "ház → házak",
+          "examples": ["A házak nagyok. (The houses are big)"]
+        },
+        {
+          "base": "könyv → könyvek",
+          "examples": ["Olvasok könyveket. (I read books)"]
+        }
+      ],
+      "exercises": [
+        {
+          "type": "transform",
+          "question": "Make plural: kutya (dog)",
+          "correct": "kutyák",
+          "explanation": "kutya ends in -a, just add -k"
+        }
+      ],
+      "miniStory": "Ez egy alma. Ezek almák. Sok alma van a piacon."
+    },
+    {
+      "id": 4,
+      "topic": "Possessive Suffixes",
+      "level": 2,
+      "category": "noun-suffixes",
+      "colorCode": "#38A3A5",
+      "explanation": "Hungarian shows possession with suffixes on the possessed noun (like English 's but reversed).",
+      "rules": [
+        "my: -(a)m/-(e)m",
+        "your (sg): -(o)d/-(e)d/-(ö)d",
+        "his/her: -(j)a/-(j)e",
+        "Vowel harmony applies to all suffixes"
+      ],
+      "patterns": [
+        {
+          "base": "ház (house)",
+          "examples": [
+            "házam (my house)",
+            "házad (your house)",
+            "háza (his/her house)",
+            "házunk (our house)"
+          ]
+        },
+        {
+          "base": "könyv (book)",
+          "examples": [
+            "könyvem (my book)",
+            "könyved (your book)",
+            "könyve (his/her book)"
+          ]
+        }
+      ],
+      "exercises": [
+        {
+          "type": "transform",
+          "question": "Add 'my': alma (apple)",
+          "correct": "almám",
+          "explanation": "alma ends in vowel, add -m; but a→á before suffix"
+        }
+      ],
+      "miniStory": "Ez az én házam. Az a te házad. Ez az ő háza. Mindenkinek van háza."
+    },
+    {
+      "id": 5,
+      "topic": "Verb Conjugation - Present Indefinite",
+      "level": 1,
+      "category": "verbs",
+      "colorCode": "#B388EB",
+      "explanation": "Hungarian verbs conjugate based on person AND whether the object is definite or indefinite. This is the indefinite conjugation (no specific object or intransitive verb).",
+      "rules": [
+        "Remove the -ni infinitive ending",
+        "Add person endings: -ok/ek/ök, -sz, -, -unk/ünk, -tok/tek/tök, -nak/nek"
+      ],
+      "patterns": [
+        {
+          "base": "dolgozik (to work)",
+          "examples": [
+            "dolgozom (I work)",
+            "dolgozol (you work)",
+            "dolgozik (he/she works)",
+            "dolgozunk (we work)",
+            "dolgoztok (you all work)",
+            "dolgoznak (they work)"
+          ]
+        },
+        {
+          "base": "tanul (to study/learn)",
+          "examples": [
+            "tanulok (I study)",
+            "tanulsz (you study)",
+            "tanul (he/she studies)"
+          ]
+        }
+      ],
+      "exercises": [
+        {
+          "type": "conjugate",
+          "question": "Conjugate 'eszik' (to eat) for 'I'",
+          "correct": "eszem",
+          "explanation": "Irregular verb: esz + -em"
+        }
+      ],
+      "miniStory": "Én tanulok. Te tanulsz. Ő tanul. Mi tanulunk magyarul."
+    },
+    {
+      "id": 6,
+      "topic": "Inessive Case (-ban, -ben)",
+      "level": 1,
+      "category": "cases",
+      "colorCode": "#8093F1",
+      "explanation": "The inessive case means 'in' or 'inside'. Add -ban or -ben based on vowel harmony.",
+      "rules": [
+        "Back vowel words: -ban",
+        "Front vowel words: -ben"
+      ],
+      "patterns": [
+        {
+          "base": "ház (house)",
+          "examples": ["házban (in the house)", "A macska a házban van."]
+        },
+        {
+          "base": "kert (garden)",
+          "examples": ["kertben (in the garden)", "Péter a kertben dolgozik."]
+        }
+      ],
+      "exercises": [
+        {
+          "type": "transform",
+          "question": "Add 'in': szoba (room)",
+          "correct": "szobában",
+          "explanation": "szoba has back vowels, use -ban; a→á before suffix"
+        }
+      ],
+      "miniStory": "A kutya a házban van. A macska a kertben van. Mindketten boldog."
+    },
+    {
+      "id": 7,
+      "topic": "Personal Pronouns",
+      "level": 1,
+      "category": "foundation",
+      "colorCode": "#72DDF7",
+      "explanation": "Hungarian personal pronouns. Often dropped because the verb ending shows the person.",
+      "rules": [
+        "Subject pronouns are often omitted",
+        "Use them for emphasis or clarity"
+      ],
+      "patterns": [
+        {
+          "base": "Singular",
+          "examples": [
+            "én (I)",
+            "te (you - informal)",
+            "ő (he/she/it)",
+            "maga/ön (you - formal)"
+          ]
+        },
+        {
+          "base": "Plural",
+          "examples": [
+            "mi (we)",
+            "ti (you all - informal)",
+            "ők (they)",
+            "maguk/önök (you all - formal)"
+          ]
+        }
+      ],
+      "exercises": [
+        {
+          "type": "translate",
+          "question": "Translate: I am happy",
+          "correct": "Boldog vagyok",
+          "explanation": "'Én' is optional because vagyok shows first person"
+        }
+      ],
+      "miniStory": "Én vagyok Péter. Te vagy Anna. Ő tanul. Mi tanulunk."
+    },
+    {
+      "id": 8,
+      "topic": "Word Order",
+      "level": 2,
+      "category": "foundation",
+      "colorCode": "#FF6F91",
+      "explanation": "Hungarian word order is flexible but follows focus rules. The word before the verb is emphasized.",
+      "rules": [
+        "Neutral order: Subject - Verb - Object",
+        "Focus position: immediately before the verb",
+        "Question words take focus position"
+      ],
+      "patterns": [
+        {
+          "base": "Neutral statement",
+          "examples": [
+            "Péter eszik egy almát. (Peter eats an apple)",
+            "Én olvasok egy könyvet. (I read a book)"
+          ]
+        },
+        {
+          "base": "Focus/emphasis",
+          "examples": [
+            "EGY ALMÁT eszik Péter. (It's AN APPLE that Peter eats)",
+            "PÉTER eszik egy almát. (It's PETER who eats an apple)"
+          ]
+        }
+      ],
+      "exercises": [
+        {
+          "type": "reorder",
+          "question": "Emphasize 'könyvet': Olvasok egy könyvet",
+          "correct": "Egy könyvet olvasok",
+          "explanation": "Move the emphasized word before the verb"
+        }
+      ],
+      "miniStory": "Péter olvas. Mit olvas? Könyvet olvas. Péter könyvet olvas."
+    },
+    {
+      "id": 9,
+      "topic": "Negation (nem)",
+      "level": 1,
+      "category": "foundation",
+      "colorCode": "#F38181",
+      "explanation": "To negate a sentence, put 'nem' directly before the verb.",
+      "rules": [
+        "'nem' goes immediately before the verb",
+        "No other changes needed",
+        "Double negatives don't cancel in Hungarian"
+      ],
+      "patterns": [
+        {
+          "base": "Positive",
+          "examples": [
+            "Eszem almát. (I eat an apple)",
+            "Péter tanul. (Peter studies)"
+          ]
+        },
+        {
+          "base": "Negative",
+          "examples": [
+            "Nem eszem almát. (I don't eat an apple)",
+            "Péter nem tanul. (Peter doesn't study)"
+          ]
+        }
+      ],
+      "exercises": [
+        {
+          "type": "transform",
+          "question": "Make negative: Iszom vizet.",
+          "correct": "Nem iszom vizet.",
+          "explanation": "Add 'nem' before the verb"
+        }
+      ],
+      "miniStory": "Péter eszik. Anna nem eszik. Péter boldog. Anna nem boldog."
+    },
+    {
+      "id": 10,
+      "topic": "Question Formation",
+      "level": 1,
+      "category": "foundation",
+      "colorCode": "#546DE5",
+      "explanation": "Yes/no questions use the same word order but rising intonation. Question words replace the questioned element.",
+      "rules": [
+        "Yes/no: same order + rising intonation (or add -e)",
+        "Wh-questions: question word in focus position (before verb)",
+        "Common question words: mi (what), ki (who), hol (where), mikor (when), miért (why)"
+      ],
+      "patterns": [
+        {
+          "base": "Yes/no questions",
+          "examples": [
+            "Eszel almát? (Do you eat an apple?)",
+            "Tanulsz magyarul? (Are you learning Hungarian?)"
+          ]
+        },
+        {
+          "base": "Wh-questions",
+          "examples": [
+            "Mit eszel? (What do you eat?)",
+            "Hol vagy? (Where are you?)",
+            "Ki tanul? (Who studies?)"
+          ]
+        }
+      ],
+      "exercises": [
+        {
+          "type": "transform",
+          "question": "Ask 'what': Péter olvas. (Peter reads)",
+          "correct": "Mit olvas Péter?",
+          "explanation": "'Mit' (what-ACC) takes focus position before verb"
+        }
+      ],
+      "miniStory": "Ki vagy? Én vagyok Péter. Mit csinálsz? Tanulok. Hol tanulsz? Otthon."
+    }
+  ]
+}

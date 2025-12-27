@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇭🇺 Learn Hungarian - aMagyar</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="translate-api.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🇭🇺 aMagyar</h1>
+            <p class="tagline">Your Modular Hungarian Learning Companion</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <button class="nav-btn active" data-screen="lessons">📚 Lessons</button>
+            <button class="nav-btn" data-screen="vocabulary">📖 Vocabulary</button>
+            <button class="nav-btn" data-screen="grammar">🔧 Grammar</button>
+            <button class="nav-btn" data-screen="translate">🌐 Translate</button>
+            <button class="nav-btn" data-screen="quiz">🎯 Quiz</button>
+            <button class="nav-btn" data-screen="builder">🧩 Suffix Builder</button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content">
+            
+            <!-- Lessons Screen -->
+            <div id="lessons-screen" class="screen active">
+                <h2>Learning Path</h2>
+                <p class="screen-desc">Follow the modular lesson sequence</p>
+                <div id="lessons-list" class="lessons-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Vocabulary Screen -->
+            <div id="vocabulary-screen" class="screen">
+                <h2>Vocabulary Library</h2>
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-tag="all">All</button>
+                    <button class="filter-btn" data-tag="beginner">Beginner</button>
+                    <button class="filter-btn" data-tag="food">Food</button>
+                    <button class="filter-btn" data-tag="greeting">Greetings</button>
+                    <button class="filter-btn" data-tag="verb">Verbs</button>
+                    <button class="filter-btn" data-tag="family">Family</button>
+                    <button class="filter-btn" data-tag="color">Colors</button>
+                </div>
+                <div id="vocab-list" class="vocab-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Grammar Screen -->
+            <div id="grammar-screen" class="screen">
+                <h2>Grammar Modules</h2>
+                <p class="screen-desc">Master Hungarian grammar piece by piece</p>
+                <div id="grammar-list" class="grammar-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+                
+                <!-- Grammar Detail View -->
+                <div id="grammar-detail" class="grammar-detail hidden">
+                    <button class="back-btn" onclick="closeGrammarDetail()">← Back to Topics</button>
+                    <div id="grammar-content">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+Translation Screen -->
+            <div id="translate-screen" class="screen">
+                <h2>🌐 Real-time Translation</h2>
+                <p class="screen-desc">Powered by LibreTranslate - Free & Open Source</p>
+                
+                <div class="translate-container">
+                    <!-- Translation Mode Selector -->
+                    <div class="translate-mode-selector">
+                        <button class="mode-btn active" data-mode="text" onclick="switchTranslateMode('text')">
+                            📝 Text Translation
+                        </button>
+                        <button class="mode-btn" data-mode="vocab" onclick="switchTranslateMode('vocab')">
+                            📚 Vocabulary Helper
+                        </button>
+                        <button class="mode-btn" data-mode="batch" onclick="switchTranslateMode('batch')">
+                            🔄 Batch Translate
+                        </button>
+                    </div>
+                    
+                    <!-- Text Translation Mode -->
+                    <div id="text-translate-mode" class="translate-mode active">
+                        <div class="translate-panels">
+                            <!-- Source Panel -->
+                            <div class="translate-panel source-panel">
+                                <div class="panel-header">
+                                    <select id="source-lang" class="lang-select" onchange="updateTranslation()">
+                                        <option value="auto">🔍 Auto-detect</option>
+                                        <option value="en">🇬🇧 English</option>
+                                        <option value="hu" selected>🇭🇺 Hungarian</option>
+                                        <option value="de">🇩🇪 German</option>
+                                        <option value="fr">🇫🇷 French</option>
+                                        <option value="es">🇪🇸 Spanish</option>
+                                    </select>
+                                    <button class="swap-btn" onclick="swapLanguages()" title="Swap languages">⇄</button>
+                                </div>
+                                <textarea 
+                                    id="source-text" 
+                                    class="translate-textarea"
+                                    placeholder="Enter text to translate..."
+                                    oninput="handleTextInput()"
+                                ></textarea>
+                                <div class="char-count">
+                                    <span id="source-char-count">0</span> characters
+                                </div>
+                            </div>
+                            
+                            <!-- Target Panel -->
+                            <div class="translate-panel target-panel">
+                                <div class="panel-header">
+                                    <select id="target-lang" class="lang-select" onchange="updateTranslation()">
+                                        <option value="en" selected>🇬🇧 English</option>
+                                        <option value="hu">🇭🇺 Hungarian</option>
+                                        <option value="de">🇩🇪 German</option>
+                                        <option value="fr">🇫🇷 French</option>
+                                        <option value="es">🇪🇸 Spanish</option>
+                                    </select>
+                                    <button class="copy-btn" onclick="copyTranslation()" title="Copy translation">📋</button>
+                                </div>
+                                <div id="target-text" class="translate-output">
+                                    Translation will appear here...
+                                </div>
+                                <div class="translation-info" id="translation-info"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="translate-actions">
+                            <button class="btn-primary" onclick="performTranslation()">
+                                🌐 Translate
+                            </button>
+                            <button class="btn-secondary" onclick="clearTranslation()">
+                                🔄 Clear
+                            </button>
+                            <button class="btn-secondary" onclick="saveToVocabulary()">
+                                💾 Save to Vocabulary
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Vocabulary Helper Mode -->
+                    <div id="vocab-translate-mode" class="translate-mode">
+                        <div class="vocab-helper-container">
+                            <h3>Quick Vocabulary Lookup</h3>
+                            <p>Search and translate words from your vocabulary list</p>
+                            
+                            <div class="vocab-search">
+                                <input 
+                                    type="text" 
+                                    id="vocab-search-input" 
+                                    class="vocab-search-input"
+                                    placeholder="Search vocabulary word..."
+                                    oninput="searchVocabulary()"
+                                >
+                            </div>
+                            
+                            <div id="vocab-translate-results" class="vocab-translate-results">
+                                <!-- Populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Batch Translation Mode -->
+                    <div id="batch-translate-mode" class="translate-mode">
+                        <div class="batch-container">
+                            <h3>Batch Translation</h3>
+                            <p>Translate multiple sentences at once (one per line)</p>
+                            
+                            <div class="batch-controls">
+                                <select id="batch-source-lang" class="lang-select">
+                                    <option value="auto">Auto-detect</option>
+                                    <option value="en">English</option>
+                                    <option value="hu" selected>Hungarian</option>
+                                </select>
+                                <span>→</span>
+                                <select id="batch-target-lang" class="lang-select">
+                                    <option value="en" selected>English</option>
+                                    <option value="hu">Hungarian</option>
+                                </select>
+                            </div>
+                            
+                            <textarea 
+                                id="batch-input" 
+                                class="batch-textarea"
+                                placeholder="Enter multiple lines to translate..."
+                            ></textarea>
+                            
+                            <button class="btn-primary" onclick="performBatchTranslation()">
+                                🔄 Translate All
+                            </button>
+                            
+                            <div id="batch-results" class="batch-results">
+                                <!-- Results appear here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- API Status & Settings -->
+                    <div class="translate-footer">
+                        <div class="api-status" id="api-status">
+                            <span class="status-indicator">●</span>
+                            <span id="status-text">Ready</span>
+                        </div>
+                        <div class="cache-info" id="cache-info">
+                            Cache: 0 items
+                        </div>
+                        <button class="btn-link" onclick="testAPIConnection()">Test Connection</button>
+                        <button class="btn-link" onclick="clearTranslationCache()">Clear Cache</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 
+            <!-- Quiz Screen -->
+            <div id="quiz-screen" class="screen">
+                <h2>Practice Quiz</h2>
+                <div class="quiz-options">
+                    <button class="quiz-type-btn" onclick="startQuiz('flashcard')">🃏 Flashcards</button>
+                    <button class="quiz-type-btn" onclick="startQuiz('multiple-choice')">✅ Multiple Choice</button>
+                    <button class="quiz-type-btn" onclick="startQuiz('fill-blank')">✏️ Fill in the Blank</button>
+                </div>
+                
+                <div id="quiz-container" class="quiz-container hidden">
+                    <div class="quiz-progress">
+                        <span id="quiz-current">1</span> / <span id="quiz-total">10</span>
+                    </div>
+                    <div id="quiz-question" class="quiz-question">
+                        <!-- Populated dynamically -->
+                    </div>
+                    <div id="quiz-feedback" class="quiz-feedback hidden">
+                        <!-- Feedback shown here -->
+                    </div>
+                    <button id="quiz-next" class="btn-primary hidden" onclick="nextQuestion()">Next →</button>
+                    <div id="quiz-results" class="quiz-results hidden">
+                        <!-- Final results -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suffix Builder Screen -->
+            <div id="builder-screen" class="screen">
+                <h2>🧩 Interactive Suffix Builder</h2>
+                <p class="screen-desc">Watch words transform as you add suffixes!</p>
+                
+                <div class="builder-container">
+                    <div class="builder-word-select">
+                        <label>Choose a base word:</label>
+                        <select id="base-word-select" onchange="updateBuilder()">
+                            <option value="ház">ház (house)</option>
+                            <option value="alma">alma (apple)</option>
+                            <option value="könyv">könyv (book)</option>
+                            <option value="víz">víz (water)</option>
+                            <option value="kéz">kéz (hand)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="builder-display">
+                        <div class="base-word" id="builder-base">ház</div>
+                        <div class="suffix-chain" id="suffix-chain"></div>
+                    </div>
+                    
+                    <div class="suffix-options">
+                        <h3>Add Suffixes:</h3>
+                        <div class="suffix-buttons">
+                            <button class="suffix-btn location" onclick="addSuffix('ban', 'in')">-ban/-ben<br><small>in</small></button>
+                            <button class="suffix-btn location" onclick="addSuffix('ból', 'from')">-ból/-ből<br><small>from</small></button>
+                            <button class="suffix-btn possession" onclick="addSuffix('am', 'my')">-am/-em<br><small>my</small></button>
+                            <button class="suffix-btn plural" onclick="addSuffix('ak', 'PL')">-ak/-ek<br><small>plural</small></button>
+                            <button class="suffix-btn accusative" onclick="addSuffix('at', 'ACC')">-at/-et<br><small>object</small></button>
+                        </div>
+                        <button class="btn-secondary" onclick="clearSuffixes()">🔄 Reset</button>
+                    </div>
+                    
+                    <div class="builder-explanation" id="builder-explanation">
+                        <strong>Current word:</strong> <span id="current-word-display">ház</span><br>
+                        <strong>Meaning:</strong> <span id="current-meaning">house</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with 💙 for Hungarian learners | Modular & Expandable</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
