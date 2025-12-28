@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupNavigation();
     renderLessons();
     renderVocabulary();
+    renderNumbers();
     renderGrammar();
     setupFilters();
     updateBuilder();
@@ -103,9 +104,36 @@ function showLessonDetail(lessonId) {
     const lesson = lessonsData.find(l => l.id === lessonId);
     if (!lesson) return;
     
-    alert(`📚 Lesson ${lesson.order}: ${lesson.title}\n\n${lesson.description}\n\n` +
-          `Story: ${lesson.story.title}\n${lesson.story.content}\n\n` +
-          `Translation: ${lesson.story.translation}`);
+    // Hide lessons list, show detail view
+    document.getElementById('lessons-list').style.display = 'none';
+    const detailView = document.getElementById('lesson-detail');
+    detailView.classList.remove('hidden');
+    
+    // Populate lesson content
+    const content = document.getElementById('lesson-content');
+    content.innerHTML = `
+        <div class="lesson-header">
+            <span class="lesson-badge">Lesson ${lesson.order}</span>
+            <h3>${lesson.title}</h3>
+        </div>
+        <p class="lesson-description">${lesson.description}</p>
+        
+        <div class="lesson-story">
+            <h4>📖 ${lesson.story.title}</h4>
+            <div class="story-content">
+                <p class="hungarian-text">${lesson.story.content}</p>
+            </div>
+            <div class="story-translation">
+                <p class="translation-label"><strong>Translation:</strong></p>
+                <p class="english-text">${lesson.story.translation}</p>
+            </div>
+        </div>
+    `;
+}
+
+function closeLessonDetail() {
+    document.getElementById('lessons-list').style.display = 'grid';
+    document.getElementById('lesson-detail').classList.add('hidden');
 }
 
 // ===========================
@@ -121,7 +149,10 @@ function renderVocabulary(filterTag = 'all') {
     
     container.innerHTML = filteredVocab.map(word => `
         <div class="vocab-card">
-            <div class="vocab-word">${word.word}</div>
+            <div class="vocab-header">
+                <div class="vocab-word">${word.word}</div>
+                <button class="audio-btn" onclick="speakHungarian('${word.word.replace(/'/g, "\\'")}', event)" title="Listen to pronunciation">🔊</button>
+            </div>
             <div class="vocab-pronunciation">/${word.ipa}/</div>
             <div class="vocab-translation">${word.translation}</div>
             <div class="vocab-example">
@@ -150,6 +181,124 @@ function setupFilters() {
             renderVocabulary(tag);
         });
     });
+}
+
+// ===========================
+// Numbers Screen
+// ===========================
+const hungarianNumbers = {
+    basic: [
+        { num: 0, hun: 'nulla' }, { num: 1, hun: 'egy' }, { num: 2, hun: 'kettő/két' },
+        { num: 3, hun: 'három' }, { num: 4, hun: 'négy' }, { num: 5, hun: 'öt' },
+        { num: 6, hun: 'hat' }, { num: 7, hun: 'hét' }, { num: 8, hun: 'nyolc' },
+        { num: 9, hun: 'kilenc' }, { num: 10, hun: 'tíz' }, { num: 11, hun: 'tizenegy' },
+        { num: 12, hun: 'tizenkettő' }, { num: 13, hun: 'tizenhárom' }, { num: 14, hun: 'tizennégy' },
+        { num: 15, hun: 'tizenöt' }, { num: 16, hun: 'tizenhat' }, { num: 17, hun: 'tizenhét' },
+        { num: 18, hun: 'tizennyolc' }, { num: 19, hun: 'tizenkilenc' }, { num: 20, hun: 'húsz' }
+    ],
+    tens: [
+        { num: 10, hun: 'tíz' }, { num: 20, hun: 'húsz' }, { num: 30, hun: 'harminc' },
+        { num: 40, hun: 'negyven' }, { num: 50, hun: 'ötven' }, { num: 60, hun: 'hatvan' },
+        { num: 70, hun: 'hetven' }, { num: 80, hun: 'nyolcvan' }, { num: 90, hun: 'kilencven' }
+    ],
+    large: [
+        { num: 100, hun: 'száz' }, { num: 1000, hun: 'ezer' },
+        { num: 1000000, hun: 'millió' }
+    ]
+};
+
+function renderNumbers() {
+    // Basic numbers
+    const basicContainer = document.getElementById('basic-numbers');
+    if (basicContainer) {
+        basicContainer.innerHTML = hungarianNumbers.basic.map(item => `
+            <div class="number-card">
+                <div class="number-digit">${item.num}</div>
+                <div class="number-word">${item.hun}</div>
+                <button class="audio-btn-small" onclick="speakHungarian('${item.hun}', event)" title="Listen">🔊</button>
+            </div>
+        `).join('');
+    }
+
+    // Tens
+    const tensContainer = document.getElementById('tens-numbers');
+    if (tensContainer) {
+        tensContainer.innerHTML = hungarianNumbers.tens.map(item => `
+            <div class="number-card">
+                <div class="number-digit">${item.num}</div>
+                <div class="number-word">${item.hun}</div>
+                <button class="audio-btn-small" onclick="speakHungarian('${item.hun}', event)" title="Listen">🔊</button>
+            </div>
+        `).join('');
+    }
+
+    // Large numbers
+    const largeContainer = document.getElementById('large-numbers');
+    if (largeContainer) {
+        largeContainer.innerHTML = hungarianNumbers.large.map(item => `
+            <div class="number-card">
+                <div class="number-digit">${item.num.toLocaleString()}</div>
+                <div class="number-word">${item.hun}</div>
+                <button class="audio-btn-small" onclick="speakHungarian('${item.hun}', event)" title="Listen">🔊</button>
+            </div>
+        `).join('');
+    }
+}
+
+function convertNumber() {
+    const input = document.getElementById('number-input');
+    const result = document.getElementById('number-result');
+    const num = parseInt(input.value);
+    
+    if (isNaN(num) || num < 0 || num > 999) {
+        result.innerHTML = '<p class="error">Please enter a number between 0 and 999</p>';
+        return;
+    }
+    
+    const hungarian = numberToHungarian(num);
+    result.innerHTML = `
+        <div class="number-conversion">
+            <div class="conversion-number">${num}</div>
+            <div class="conversion-arrow">→</div>
+            <div class="conversion-hungarian">${hungarian}</div>
+            <button class="audio-btn" onclick="speakHungarian('${hungarian}', event)">🔊</button>
+        </div>
+    `;
+}
+
+function numberToHungarian(num) {
+    if (num === 0) return 'nulla';
+    
+    const ones = ['', 'egy', 'kettő', 'három', 'négy', 'öt', 'hat', 'hét', 'nyolc', 'kilenc'];
+    const tens = ['', 'tíz', 'húsz', 'harminc', 'negyven', 'ötven', 'hatvan', 'hetven', 'nyolcvan', 'kilencven'];
+    
+    if (num < 10) return ones[num];
+    if (num === 10) return 'tíz';
+    if (num < 20) return 'tizen' + ones[num - 10];
+    if (num < 100) {
+        const ten = Math.floor(num / 10);
+        const one = num % 10;
+        return tens[ten] + (one > 0 ? ones[one] : '');
+    }
+    
+    // 100-999
+    const hundred = Math.floor(num / 100);
+    const remainder = num % 100;
+    let result = (hundred === 1 ? '' : ones[hundred]) + 'száz';
+    
+    if (remainder > 0) {
+        if (remainder < 10) {
+            result += ones[remainder];
+        } else if (remainder < 20) {
+            result += 'tizen' + ones[remainder - 10];
+        } else {
+            const ten = Math.floor(remainder / 10);
+            const one = remainder % 10;
+            result += tens[ten] + (one > 0 ? ones[one] : '');
+        }
+    }
+    
+    return result;
 }
 
 // ===========================
@@ -591,19 +740,25 @@ async function performTranslation() {
         targetDiv.classList.remove('loading');
         targetDiv.textContent = result.translatedText;
         
-        // Show translation info
+        // Show translation info with offline note if applicable
+        let statusText = result.cached ? '⚡ From Cache' : '🌐 Live Translation';
+        if (result.offline) {
+            statusText = '📚 Offline Dictionary';
+        }
+        
         infoDiv.innerHTML = `
             <span>📍 ${TranslateUtils.getLanguageName(result.sourceLang)} → ${TranslateUtils.getLanguageName(result.targetLang)}</span>
-            <span>${result.cached ? '⚡ From Cache' : '🌐 Live Translation'}</span>
+            <span>${statusText}</span>
+            ${result.note ? `<span style="color: #ff9800; font-size: 0.85rem;">${result.note}</span>` : ''}
         `;
         
-        updateAPIStatus('active', 'Translation complete');
+        updateAPIStatus('active', result.offline ? 'Using offline dictionary' : 'Translation complete');
         updateCacheInfo();
         
     } catch (error) {
         targetDiv.classList.remove('loading');
-        targetDiv.textContent = `❌ Error: ${error.message}`;
-        updateAPIStatus('error', error.message);
+        targetDiv.textContent = `❌ ${error.message}`;
+        updateAPIStatus('error', 'Translation failed');
         console.error('Translation error:', error);
     }
 }
@@ -885,6 +1040,28 @@ async function performBatchTranslation() {
 function playAudio(filename) {
     const audio = new Audio(filename);
     audio.play().catch(err => console.log('Audio not available:', err));
+}
+
+// Text-to-Speech for Hungarian words
+function speakHungarian(text, event) {
+    if (event) {
+        event.stopPropagation();
+    }
+    
+    // Check if browser supports speech synthesis
+    if ('speechSynthesis' in window) {
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'hu-HU'; // Hungarian language
+        utterance.rate = 0.8; // Slightly slower for learning
+        utterance.pitch = 1;
+        
+        window.speechSynthesis.speak(utterance);
+    } else {
+        console.log('Text-to-speech not supported in this browser');
+    }
 }
 
 console.log('🇭🇺 aMagyar app loaded successfully!');

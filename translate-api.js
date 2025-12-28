@@ -3,432 +3,175 @@
 // ===========================
 
 /**
- * LibreTranslate API Integration
- * Supports multiple instances and includes error handling, caching, and rate limiting
+ * Simple translator using LibreTranslate API with offline fallback
+ * Dictionary loaded from dictionary-1000.js (referenced as global variable)
  */
 
-class TranslateAPI {
-    constructor(config = {}) {
-        // Default to public LibreTranslate instance, but allow custom endpoints
-        this.endpoints = config.endpoints || [
-            'https://libretranslate.com',
-            'https://translate.argosopentech.com',
-            'https://translate.terraprint.co'
-        ];
-        
-        this.currentEndpointIndex = 0;
-        this.apiKey = config.apiKey || null; // Optional API key for rate limit increase
-        this.cache = new Map(); // Cache translations to reduce API calls
-        this.cacheExpiry = config.cacheExpiry || 3600000; // 1 hour default
-        this.maxCacheSize = config.maxCacheSize || 100;
-        
-        // Rate limiting
-        this.requestCount = 0;
-        this.requestLimit = config.requestLimit || 20; // requests per minute
-        this.rateLimitWindow = 60000; // 1 minute
-        this.requestTimestamps = [];
-        
-        // Supported languages
-        this.languages = null;
-        this.loadLanguages();
-    }
+// Note: localDictionary is loaded from dictionary-1000.js
+// It contains ~1000 Hungarian-English word pairs for offline translation
+
+// API Configuration
+const API_URL = 'https://libretranslate.com/translate';
+const API_KEY = ''; // Add your LibreTranslate API key here if you have one
+
+// Simple local translation fallback
+function translateLocal(text, sourceLang, targetLang) {
+    const dictKey = `${sourceLang}-${targetLang}`;
+    const dict = localDictionary[dictKey];
     
-    /**
-     * Get current API endpoint
-     */
-    getCurrentEndpoint() {
-        return this.endpoints[this.currentEndpointIndex];
-    }
-    
-    /**
-     * Rotate to next endpoint on failure
-     */
-    rotateEndpoint() {
-        this.currentEndpointIndex = (this.currentEndpointIndex + 1) % this.endpoints.length;
-        console.log(`Switched to endpoint: ${this.getCurrentEndpoint()}`);
-    }
-    
-    /**
-     * Check if rate limit is exceeded
-     */
-    checkRateLimit() {
-        const now = Date.now();
-        // Remove timestamps older than rate limit window
-        this.requestTimestamps = this.requestTimestamps.filter(
-            timestamp => now - timestamp < this.rateLimitWindow
-        );
-        
-        if (this.requestTimestamps.length >= this.requestLimit) {
-            const oldestRequest = this.requestTimestamps[0];
-            const waitTime = this.rateLimitWindow - (now - oldestRequest);
-            throw new Error(`Rate limit exceeded. Please wait ${Math.ceil(waitTime / 1000)} seconds.`);
-        }
-        
-        this.requestTimestamps.push(now);
-    }
-    
-    /**
-     * Generate cache key for translation
-     */
-    getCacheKey(text, sourceLang, targetLang) {
-        return `${sourceLang}:${targetLang}:${text}`;
-    }
-    
-    /**
-     * Get cached translation if available
-     */
-    getFromCache(text, sourceLang, targetLang) {
-        const key = this.getCacheKey(text, sourceLang, targetLang);
-        const cached = this.cache.get(key);
-        
-        if (cached && Date.now() - cached.timestamp < this.cacheExpiry) {
-            console.log('Using cached translation');
-            return cached.translation;
-        }
-        
+    if (!dict) {
         return null;
     }
     
-    /**
-     * Store translation in cache
-     */
-    addToCache(text, sourceLang, targetLang, translation) {
-        const key = this.getCacheKey(text, sourceLang, targetLang);
-        
-        // Implement simple LRU cache
-        if (this.cache.size >= this.maxCacheSize) {
-            const firstKey = this.cache.keys().next().value;
-            this.cache.delete(firstKey);
-        }
-        
-        this.cache.set(key, {
-            translation,
-            timestamp: Date.now()
-        });
+    const lowerText = text.toLowerCase().trim();
+    
+    // Try exact match first
+    if (dict[lowerText]) {
+        return dict[lowerText];
     }
     
-    /**
-     * Load available languages from API
-     */
-    async loadLanguages() {
-        try {
-            const response = await fetch(`${this.getCurrentEndpoint()}/languages`);
-            if (response.ok) {
-                this.languages = await response.json();
-                console.log('Languages loaded:', this.languages);
-            }
-        } catch (error) {
-            console.warn('Failed to load languages:', error);
-            // Fallback to known languages
-            this.languages = [
-                { code: 'en', name: 'English' },
-                { code: 'hu', name: 'Hungarian' },
-                { code: 'de', name: 'German' },
-                { code: 'fr', name: 'French' },
-                { code: 'es', name: 'Spanish' }
-            ];
-        }
-    }
+    // Try word-by-word translation
+    const words = lowerText.split(/\s+/);
+    const translated = words.map(word => {
+        // Remove punctuation for lookup
+        const cleanWord = word.replace(/[.,!?;:]/g, '');
+        return dict[cleanWord] || word;
+    });
+    
+    const result = translated.join(' ');
+    
+    // Only return if we actually translated something
+    return result !== lowerText ? result : null;
+}
+
+// Main translator object
+const translator = (function() {
+    // Translation cache to avoid repeat API calls
+    const cache = new Map();
+    const MAX_CACHE_SIZE = 200;
     
     /**
-     * Detect language of text
+     * Translate text from source to target language
      */
-    async detectLanguage(text) {
-        if (!text || text.trim().length === 0) {
-            throw new Error('Text is required for language detection');
-        }
-        
-        try {
-            const response = await fetch(`${this.getCurrentEndpoint()}/detect`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ q: text })
-            });
-            
-            if (!response.ok) {
-                throw new Error(`Detection failed: ${response.statusText}`);
-            }
-            
-            const result = await response.json();
-            return result[0]; // Returns array of detections with confidence
-        } catch (error) {
-            console.error('Language detection error:', error);
-            throw error;
-        }
-    }
-    
-    /**
-     * Main translation function
-     * @param {string} text - Text to translate
-     * @param {string} sourceLang - Source language code (e.g., 'en', 'hu')
-     * @param {string} targetLang - Target language code
-     * @param {object} options - Additional options
-     */
-    async translate(text, sourceLang = 'auto', targetLang = 'hu', options = {}) {
-        // Validation
-        if (!text || text.trim().length === 0) {
-            throw new Error('Text is required for translation');
-        }
-        
-        if (!targetLang) {
-            throw new Error('Target language is required');
-        }
+    async function translate(text, sourceLang = 'auto', targetLang = 'en') {
+        const trimmed = text.trim();
+        if (!trimmed) return { translatedText: '', offline: false };
         
         // Check cache first
-        if (sourceLang !== 'auto') {
-            const cached = this.getFromCache(text, sourceLang, targetLang);
-            if (cached) {
-                return {
-                    translatedText: cached,
-                    sourceLang,
-                    targetLang,
-                    cached: true
-                };
-            }
+        const cacheKey = `${sourceLang}::${targetLang}::${trimmed}`;
+        if (cache.has(cacheKey)) {
+            return cache.get(cacheKey);
         }
         
-        // Check rate limit
         try {
-            this.checkRateLimit();
-        } catch (error) {
-            throw error;
-        }
-        
-        // Prepare request
-        const requestBody = {
-            q: text,
-            source: sourceLang,
-            target: targetLang,
-            format: options.format || 'text'
-        };
-        
-        if (this.apiKey) {
-            requestBody.api_key = this.apiKey;
-        }
-        
-        // Try translation with endpoint rotation on failure
-        let lastError;
-        for (let i = 0; i < this.endpoints.length; i++) {
-            try {
-                const response = await fetch(`${this.getCurrentEndpoint()}/translate`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestBody)
-                });
-                
-                if (!response.ok) {
-                    if (response.status === 429) {
-                        throw new Error('Rate limit exceeded. Please try again later.');
-                    }
-                    if (response.status === 403) {
-                        throw new Error('API key required or invalid.');
-                    }
-                    throw new Error(`Translation failed: ${response.statusText}`);
-                }
-                
-                const result = await response.json();
-                
-                // Detect source language if auto was used
-                let detectedLang = sourceLang;
-                if (sourceLang === 'auto' && result.detectedLanguage) {
-                    detectedLang = result.detectedLanguage.language;
-                }
-                
-                // Cache the result
-                if (detectedLang !== 'auto') {
-                    this.addToCache(text, detectedLang, targetLang, result.translatedText);
-                }
-                
-                return {
-                    translatedText: result.translatedText,
-                    sourceLang: detectedLang,
-                    targetLang,
-                    cached: false
+            // Try API translation
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    q: trimmed,
+                    source: sourceLang,
+                    target: targetLang,
+                    format: 'text',
+                    api_key: API_KEY
+                })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                const result = {
+                    translatedText: data.translatedText,
+                    detectedLanguage: data.detectedLanguage,
+                    offline: false
                 };
                 
-            } catch (error) {
-                console.warn(`Endpoint ${this.getCurrentEndpoint()} failed:`, error.message);
-                lastError = error;
-                this.rotateEndpoint();
-            }
-        }
-        
-        // All endpoints failed
-        throw new Error(`All translation endpoints failed. Last error: ${lastError.message}`);
-    }
-    
-    /**
-     * Batch translation for multiple texts
-     */
-    async translateBatch(texts, sourceLang = 'auto', targetLang = 'hu') {
-        const results = [];
-        
-        for (const text of texts) {
-            try {
-                const result = await this.translate(text, sourceLang, targetLang);
-                results.push({
-                    original: text,
-                    ...result,
-                    success: true
-                });
+                // Cache successful result
+                if (cache.size >= MAX_CACHE_SIZE) {
+                    const firstKey = cache.keys().next().value;
+                    cache.delete(firstKey);
+                }
+                cache.set(cacheKey, result);
                 
-                // Small delay to avoid overwhelming the API
-                await new Promise(resolve => setTimeout(resolve, 200));
-            } catch (error) {
-                results.push({
-                    original: text,
-                    error: error.message,
-                    success: false
-                });
+                return result;
             }
+        } catch (error) {
+            console.warn('Translation API failed, using offline dictionary:', error);
         }
         
-        return results;
-    }
-    
-    /**
-     * Get supported languages
-     */
-    async getLanguages() {
-        if (!this.languages) {
-            await this.loadLanguages();
+        // Fall back to local dictionary
+        const localTranslation = translateLocal(trimmed, sourceLang, targetLang);
+        
+        if (localTranslation && localTranslation !== trimmed) {
+            const result = {
+                translatedText: localTranslation,
+                detectedLanguage: sourceLang,
+                offline: true
+            };
+            
+            // Cache offline result too
+            if (cache.size >= MAX_CACHE_SIZE) {
+                const firstKey = cache.keys().next().value;
+                cache.delete(firstKey);
+            }
+            cache.set(cacheKey, result);
+            
+            return result;
         }
-        return this.languages;
+        
+        // No translation available
+        return {
+            translatedText: trimmed,
+            detectedLanguage: sourceLang,
+            offline: true,
+            error: 'Translation unavailable. Word not in offline dictionary.'
+        };
     }
     
     /**
-     * Clear translation cache
+     * Translate multiple texts in batch
      */
-    clearCache() {
-        this.cache.clear();
-        console.log('Translation cache cleared');
+    async function translateBatch(texts, sourceLang = 'auto', targetLang = 'en') {
+        const promises = texts.map(text => translate(text, sourceLang, targetLang));
+        return Promise.all(promises);
+    }
+    
+    /**
+     * Test connection to translation API
+     */
+    async function testConnection() {
+        try {
+            const result = await translate('hello', 'en', 'hu');
+            return !result.offline;
+        } catch {
+            return false;
+        }
     }
     
     /**
      * Get cache statistics
      */
-    getCacheStats() {
+    function getCacheStats() {
         return {
-            size: this.cache.size,
-            maxSize: this.maxCacheSize,
-            hitRate: this.cache.size > 0 ? 'Cache active' : 'No cached items'
+            size: cache.size,
+            maxSize: MAX_CACHE_SIZE,
+            entries: Array.from(cache.keys())
         };
     }
     
     /**
-     * Test API connection
+     * Clear translation cache
      */
-    async testConnection() {
-        try {
-            const result = await this.translate('Hello', 'en', 'hu');
-            return {
-                success: true,
-                endpoint: this.getCurrentEndpoint(),
-                testTranslation: result.translatedText
-            };
-        } catch (error) {
-            return {
-                success: false,
-                error: error.message
-            };
-        }
+    function clearCache() {
+        cache.clear();
     }
-}
-
-// ===========================
-// Translation Utilities
-// ===========================
-
-/**
- * Utility functions for working with translations
- */
-const TranslateUtils = {
-    /**
-     * Clean and prepare text for translation
-     */
-    cleanText(text) {
-        return text
-            .trim()
-            .replace(/\s+/g, ' ')
-            .replace(/\n+/g, '\n');
-    },
     
-    /**
-     * Split long text into chunks for translation
-     */
-    chunkText(text, maxLength = 500) {
-        const chunks = [];
-        const sentences = text.split(/[.!?]+/);
-        let currentChunk = '';
-        
-        for (const sentence of sentences) {
-            if ((currentChunk + sentence).length > maxLength) {
-                if (currentChunk) chunks.push(currentChunk.trim());
-                currentChunk = sentence;
-            } else {
-                currentChunk += sentence + '. ';
-            }
-        }
-        
-        if (currentChunk) chunks.push(currentChunk.trim());
-        return chunks;
-    },
-    
-    /**
-     * Format translation result for display
-     */
-    formatResult(result) {
-        return {
-            text: result.translatedText,
-            source: this.getLanguageName(result.sourceLang),
-            target: this.getLanguageName(result.targetLang),
-            cached: result.cached ? '⚡ Cached' : '🌐 Live'
-        };
-    },
-    
-    /**
-     * Get language name from code
-     */
-    getLanguageName(code) {
-        const languages = {
-            'en': 'English',
-            'hu': 'Hungarian',
-            'de': 'German',
-            'fr': 'French',
-            'es': 'Spanish',
-            'it': 'Italian',
-            'pt': 'Portuguese',
-            'ru': 'Russian',
-            'ja': 'Japanese',
-            'zh': 'Chinese',
-            'ar': 'Arabic',
-            'auto': 'Auto-detect'
-        };
-        return languages[code] || code.toUpperCase();
-    },
-    
-    /**
-     * Validate language code
-     */
-    isValidLanguageCode(code) {
-        const validCodes = ['auto', 'en', 'hu', 'de', 'fr', 'es', 'it', 'pt', 'ru', 'ja', 'zh', 'ar'];
-        return validCodes.includes(code);
-    }
-};
+    // Public API
+    return {
+        translate,
+        translateBatch,
+        testConnection,
+        getCacheStats,
+        clearCache
+    };
+})();
 
-// ===========================
-// Export for use in main app
-// ===========================
-
-// Initialize global translator instance
-const translator = new TranslateAPI({
-    cacheExpiry: 3600000, // 1 hour
-    maxCacheSize: 100,
-    requestLimit: 20 // 20 requests per minute
-});
-
-console.log('📡 LibreTranslate API wrapper loaded');

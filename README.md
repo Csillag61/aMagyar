@@ -1,22 +1,23 @@
 # 🇭🇺 aMagyar - Hungarian Language Learning App
 
-A friendly, modular web application for learning Hungarian vocabulary, grammar, and pronunciation.
+A comprehensive, modular web application for learning Hungarian vocabulary, grammar, numbers, and pronunciation with text-to-speech support and offline translation.
 
 ## 📁 Project Structure
 
 ```
 aMagyar/
-├── index.html          # Main app interface
-├── styles.css          # Complete styling with color-coded modules
-├── app.js              # All interactivity and quiz logic
-├── translate-api.js    # LibreTranslate API wrapper (NEW!)
+├── index.html           # Main app interface
+├── styles.css           # Complete styling with color-coded modules
+├── app.js               # All interactivity and logic
+├── translate-api.js     # LibreTranslate API wrapper with offline fallback
+├── dictionary-1000.js   # 1000-word offline dictionary (NEW!)
 ├── data/
-│   ├── vocabulary.json # 20 beginner words with examples
-│   ├── grammar.json    # 10 grammar modules
-│   └── lessons.json    # 10 complete beginner lessons
+│   ├── vocabulary.json  # 54 words with examples & audio
+│   ├── grammar.json     # 10 grammar modules
+│   └── lessons.json     # 10 complete beginner lessons
 ├── README.md
 ├── QUICKSTART.md
-└── TRANSLATION.md      # Translation module docs (NEW!)
+└── TRANSLATION.md       # Translation module docs
 ```
 
 ## 🚀 How to Run
@@ -52,14 +53,24 @@ aMagyar/
 - Each lesson includes vocabulary, grammar, phrases, and a mini-story
 
 ### 📖 **Vocabulary Library**
-- 20 vocabulary words with:
+- **54 vocabulary words** with:
   - Hungarian word
   - IPA pronunciation
   - English translation
   - Example sentence (Hungarian + English)
   - Tags for filtering
   - Related forms (plurals, conjugations, cases)
+  - **🔊 Text-to-Speech audio** - Click speaker button to hear pronunciation
+- **Categories:** Greetings (8), Food (13), Drinks (3), Animals (4), Colors (7), Family (7), Numbers (3), Transportation (2), Furniture (4), Places (1)
 - Filter by: All, Beginner, Food, Greetings, Verbs, Family, Colors
+
+### 🔢 **Numbers Screen (NEW!)**
+- **Basic Numbers (0-20)** - Learn fundamental counting
+- **Tens (10-90)** - Ten, twenty, thirty, etc.
+- **Large Numbers** - Hundred, thousand, million
+- **Interactive Converter** - Enter any number (0-999) and see it in Hungarian
+- **Audio for all numbers** - Text-to-speech pronunciation
+- Smart grammar rules applied automatically
 
 ### 🔧 **Grammar Modules**
 - 10 grammar topics:

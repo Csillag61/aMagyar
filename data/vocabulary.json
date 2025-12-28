@@ -6,7 +6,7 @@
       "translation": "apple",
       "ipa": "ˈɒlmɒ",
       "audioFile": "audio/alma.mp3",
-      "exampleSentence": "Eszem egy almát.",
+      "exampleSentence": "Eszek egy almát.",
       "exampleTranslation": "I eat an apple.",
       "tags": ["food", "noun", "beginner"],
       "relatedForms": {
@@ -278,6 +278,484 @@
       "exampleTranslation": "What's the weather like?",
       "tags": ["time", "weather", "noun", "beginner"],
       "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 21,
+      "word": "kenyér",
+      "translation": "bread",
+      "ipa": "ˈkɛɲeːr",
+      "audioFile": "audio/kenyer.mp3",
+      "exampleSentence": "Friss kenyeret veszek.",
+      "exampleTranslation": "I buy fresh bread.",
+      "tags": ["food", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "kenyeret"
+      },
+      "level": 1
+    },
+    {
+      "id": 22,
+      "word": "tej",
+      "translation": "milk",
+      "ipa": "ˈtɛj",
+      "audioFile": "audio/tej.mp3",
+      "exampleSentence": "Iszom egy pohár tejet.",
+      "exampleTranslation": "I drink a glass of milk.",
+      "tags": ["drink", "food", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "tejet"
+      },
+      "level": 1
+    },
+    {
+      "id": 23,
+      "word": "sajt",
+      "translation": "cheese",
+      "ipa": "ˈʃɒjt",
+      "audioFile": "audio/sajt.mp3",
+      "exampleSentence": "A sajt finom.",
+      "exampleTranslation": "The cheese is delicious.",
+      "tags": ["food", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "sajtot"
+      },
+      "level": 1
+    },
+    {
+      "id": 24,
+      "word": "tojás",
+      "translation": "egg",
+      "ipa": "ˈtojaːʃ",
+      "audioFile": "audio/tojas.mp3",
+      "exampleSentence": "Két tojást eszem reggelre.",
+      "exampleTranslation": "I eat two eggs for breakfast.",
+      "tags": ["food", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "tojást",
+        "plural": "tojások"
+      },
+      "level": 1
+    },
+    {
+      "id": 25,
+      "word": "hús",
+      "translation": "meat",
+      "ipa": "ˈhuːʃ",
+      "audioFile": "audio/hus.mp3",
+      "exampleSentence": "Nem eszem húst.",
+      "exampleTranslation": "I don't eat meat.",
+      "tags": ["food", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "húst"
+      },
+      "level": 1
+    },
+    {
+      "id": 26,
+      "word": "hal",
+      "translation": "fish",
+      "ipa": "ˈhɒl",
+      "audioFile": "audio/hal.mp3",
+      "exampleSentence": "Halat eszünk ma este.",
+      "exampleTranslation": "We eat fish tonight.",
+      "tags": ["food", "animal", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "halat",
+        "plural": "halak"
+      },
+      "level": 1
+    },
+    {
+      "id": 27,
+      "word": "banán",
+      "translation": "banana",
+      "ipa": "ˈbɒnaːn",
+      "audioFile": "audio/banan.mp3",
+      "exampleSentence": "A banán sárga.",
+      "exampleTranslation": "The banana is yellow.",
+      "tags": ["food", "fruit", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "banánt",
+        "plural": "banánok"
+      },
+      "level": 1
+    },
+    {
+      "id": 28,
+      "word": "narancs",
+      "translation": "orange",
+      "ipa": "ˈnɒrɒnt͡ʃ",
+      "audioFile": "audio/narancs.mp3",
+      "exampleSentence": "Narancslét iszom.",
+      "exampleTranslation": "I drink orange juice.",
+      "tags": ["food", "fruit", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "narancsot",
+        "plural": "narancsok"
+      },
+      "level": 1
+    },
+    {
+      "id": 29,
+      "word": "paradicsom",
+      "translation": "tomato",
+      "ipa": "ˈpɒrɒdit͡ʃom",
+      "audioFile": "audio/paradicsom.mp3",
+      "exampleSentence": "Friss paradicsomot veszek.",
+      "exampleTranslation": "I buy fresh tomatoes.",
+      "tags": ["food", "vegetable", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "paradicsomot",
+        "plural": "paradicsomok"
+      },
+      "level": 1
+    },
+    {
+      "id": 30,
+      "word": "krumpli",
+      "translation": "potato",
+      "ipa": "ˈkrumpli",
+      "audioFile": "audio/krumpli.mp3",
+      "exampleSentence": "Krumplit főzök.",
+      "exampleTranslation": "I cook potatoes.",
+      "tags": ["food", "vegetable", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "krumplit",
+        "plural": "krumplik"
+      },
+      "level": 1
+    },
+    {
+      "id": 31,
+      "word": "kávé",
+      "translation": "coffee",
+      "ipa": "ˈkaːveː",
+      "audioFile": "audio/kave.mp3",
+      "exampleSentence": "Reggel kávét iszom.",
+      "exampleTranslation": "I drink coffee in the morning.",
+      "tags": ["drink", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "kávét"
+      },
+      "level": 1
+    },
+    {
+      "id": 32,
+      "word": "tea",
+      "translation": "tea",
+      "ipa": "ˈtɛɒ",
+      "audioFile": "audio/tea.mp3",
+      "exampleSentence": "Este teát iszom.",
+      "exampleTranslation": "I drink tea in the evening.",
+      "tags": ["drink", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "teát"
+      },
+      "level": 1
+    },
+    {
+      "id": 33,
+      "word": "kutya",
+      "translation": "dog",
+      "ipa": "ˈkutjɒ",
+      "audioFile": "audio/kutya.mp3",
+      "exampleSentence": "A kutyám barátságos.",
+      "exampleTranslation": "My dog is friendly.",
+      "tags": ["animal", "noun", "beginner"],
+      "relatedForms": {
+        "possessive1sg": "kutyám",
+        "plural": "kutyák"
+      },
+      "level": 1
+    },
+    {
+      "id": 34,
+      "word": "macska",
+      "translation": "cat",
+      "ipa": "ˈmɒt͡ʃkɒ",
+      "audioFile": "audio/macska.mp3",
+      "exampleSentence": "A macskám alszik.",
+      "exampleTranslation": "My cat is sleeping.",
+      "tags": ["animal", "noun", "beginner"],
+      "relatedForms": {
+        "possessive1sg": "macskám",
+        "plural": "macskák"
+      },
+      "level": 1
+    },
+    {
+      "id": 35,
+      "word": "ló",
+      "translation": "horse",
+      "ipa": "ˈloː",
+      "audioFile": "audio/lo.mp3",
+      "exampleSentence": "A ló gyorsan fut.",
+      "exampleTranslation": "The horse runs fast.",
+      "tags": ["animal", "noun", "beginner"],
+      "relatedForms": {
+        "plural": "lovak"
+      },
+      "level": 1
+    },
+    {
+      "id": 36,
+      "word": "madár",
+      "translation": "bird",
+      "ipa": "ˈmɒdaːr",
+      "audioFile": "audio/madar.mp3",
+      "exampleSentence": "A madár énekel.",
+      "exampleTranslation": "The bird is singing.",
+      "tags": ["animal", "noun", "beginner"],
+      "relatedForms": {
+        "plural": "madarak"
+      },
+      "level": 1
+    },
+    {
+      "id": 37,
+      "word": "zöld",
+      "translation": "green",
+      "ipa": "ˈzøld",
+      "audioFile": "audio/zold.mp3",
+      "exampleSentence": "A fű zöld.",
+      "exampleTranslation": "The grass is green.",
+      "tags": ["color", "adjective", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 38,
+      "word": "sárga",
+      "translation": "yellow",
+      "ipa": "ˈʃaːrgɒ",
+      "audioFile": "audio/sarga.mp3",
+      "exampleSentence": "A nap sárga.",
+      "exampleTranslation": "The sun is yellow.",
+      "tags": ["color", "adjective", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 39,
+      "word": "fekete",
+      "translation": "black",
+      "ipa": "ˈfɛkɛtɛ",
+      "audioFile": "audio/fekete.mp3",
+      "exampleSentence": "A macska fekete.",
+      "exampleTranslation": "The cat is black.",
+      "tags": ["color", "adjective", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 40,
+      "word": "fehér",
+      "translation": "white",
+      "ipa": "ˈfɛheːr",
+      "audioFile": "audio/feher.mp3",
+      "exampleSentence": "A hó fehér.",
+      "exampleTranslation": "The snow is white.",
+      "tags": ["color", "adjective", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 41,
+      "word": "testvér",
+      "translation": "sibling",
+      "ipa": "ˈtɛʃtveːr",
+      "audioFile": "audio/testveer.mp3",
+      "exampleSentence": "Van egy testvérem.",
+      "exampleTranslation": "I have a sibling.",
+      "tags": ["family", "noun", "beginner"],
+      "relatedForms": {
+        "possessive1sg": "testvérem",
+        "plural": "testvérek"
+      },
+      "level": 1
+    },
+    {
+      "id": 42,
+      "word": "nagymama",
+      "translation": "grandmother",
+      "ipa": "ˈnɒɟmɒmɒ",
+      "audioFile": "audio/nagymama.mp3",
+      "exampleSentence": "A nagymamám kedves.",
+      "exampleTranslation": "My grandmother is kind.",
+      "tags": ["family", "noun", "beginner"],
+      "relatedForms": {
+        "possessive1sg": "nagymamám"
+      },
+      "level": 1
+    },
+    {
+      "id": 43,
+      "word": "nagypapa",
+      "translation": "grandfather",
+      "ipa": "ˈnɒɟpɒpɒ",
+      "audioFile": "audio/nagypapa.mp3",
+      "exampleSentence": "A nagypapám öreg.",
+      "exampleTranslation": "My grandfather is old.",
+      "tags": ["family", "noun", "beginner"],
+      "relatedForms": {
+        "possessive1sg": "nagypapám"
+      },
+      "level": 1
+    },
+    {
+      "id": 44,
+      "word": "autó",
+      "translation": "car",
+      "ipa": "ˈɒutoː",
+      "audioFile": "audio/auto.mp3",
+      "exampleSentence": "Az autóm piros.",
+      "exampleTranslation": "My car is red.",
+      "tags": ["transportation", "noun", "beginner"],
+      "relatedForms": {
+        "possessive1sg": "autóm",
+        "plural": "autók"
+      },
+      "level": 1
+    },
+    {
+      "id": 45,
+      "word": "busz",
+      "translation": "bus",
+      "ipa": "ˈbus",
+      "audioFile": "audio/busz.mp3",
+      "exampleSentence": "Busszal megyek munkába.",
+      "exampleTranslation": "I go to work by bus.",
+      "tags": ["transportation", "noun", "beginner"],
+      "relatedForms": {
+        "instrumental": "busszal"
+      },
+      "level": 1
+    },
+    {
+      "id": 46,
+      "word": "könyv",
+      "translation": "book",
+      "ipa": "ˈkøɲv",
+      "audioFile": "audio/konyv.mp3",
+      "exampleSentence": "Olvasok egy könyvet.",
+      "exampleTranslation": "I read a book.",
+      "tags": ["object", "noun", "beginner"],
+      "relatedForms": {
+        "accusative": "könyvet",
+        "plural": "könyvek"
+      },
+      "level": 1
+    },
+    {
+      "id": 47,
+      "word": "asztal",
+      "translation": "table",
+      "ipa": "ˈɒstɒl",
+      "audioFile": "audio/asztal.mp3",
+      "exampleSentence": "Az asztalon van egy könyv.",
+      "exampleTranslation": "There is a book on the table.",
+      "tags": ["furniture", "noun", "beginner"],
+      "relatedForms": {
+        "superessive": "asztalon",
+        "plural": "asztalok"
+      },
+      "level": 1
+    },
+    {
+      "id": 48,
+      "word": "szék",
+      "translation": "chair",
+      "ipa": "ˈseːk",
+      "audioFile": "audio/szek.mp3",
+      "exampleSentence": "Ülök a széken.",
+      "exampleTranslation": "I sit on the chair.",
+      "tags": ["furniture", "noun", "beginner"],
+      "relatedForms": {
+        "superessive": "széken",
+        "plural": "székek"
+      },
+      "level": 1
+    },
+    {
+      "id": 49,
+      "word": "ágy",
+      "translation": "bed",
+      "ipa": "ˈaːɟ",
+      "audioFile": "audio/agy.mp3",
+      "exampleSentence": "Az ágyban alszom.",
+      "exampleTranslation": "I sleep in the bed.",
+      "tags": ["furniture", "noun", "beginner"],
+      "relatedForms": {
+        "inessive": "ágyban",
+        "plural": "ágyak"
+      },
+      "level": 1
+    },
+    {
+      "id": 50,
+      "word": "iskola",
+      "translation": "school",
+      "ipa": "ˈiʃkolɒ",
+      "audioFile": "audio/iskola.mp3",
+      "exampleSentence": "Iskolába megyek.",
+      "exampleTranslation": "I go to school.",
+      "tags": ["place", "noun", "beginner"],
+      "relatedForms": {
+        "illative": "iskolába"
+      },
+      "level": 1
+    },
+    {
+      "id": 51,
+      "word": "jó reggelt",
+      "translation": "good morning",
+      "ipa": "ˈjoː ˈrɛɡːɛlt",
+      "audioFile": "audio/jo-reggelt.mp3",
+      "exampleSentence": "Jó reggelt kívánok!",
+      "exampleTranslation": "I wish you good morning!",
+      "tags": ["greeting", "phrase", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 52,
+      "word": "jó napot",
+      "translation": "good day / hello (formal)",
+      "ipa": "ˈjoː ˈnɒpot",
+      "audioFile": "audio/jo-napot.mp3",
+      "exampleSentence": "Jó napot kívánok!",
+      "exampleTranslation": "Good day! (formal greeting)",
+      "tags": ["greeting", "phrase", "beginner"],
+      "relatedForms": {},
+      "level": 1
+    },
+    {
+      "id": 53,
+      "word": "viszontlátásra",
+      "translation": "goodbye (formal)",
+      "ipa": "ˈvisontlaːtaːʃrɒ",
+      "audioFile": "audio/viszontlatasra.mp3",
+      "exampleSentence": "Viszontlátásra! Jó napot!",
+      "exampleTranslation": "Goodbye! Have a good day!",
+      "tags": ["greeting", "phrase", "beginner"],
+      "relatedForms": {
+        "informal": "szia"
+      },
+      "level": 1
+    },
+    {
+      "id": 54,
+      "word": "nagyon szívesen",
+      "translation": "you're very welcome",
+      "ipa": "ˈnɒɟon ˈsiːvɛʃɛn",
+      "audioFile": "audio/nagyon-szivesen.mp3",
+      "exampleSentence": "Nagyon szívesen! Nincs mit!",
+      "exampleTranslation": "You're very welcome! Don't mention it!",
+      "tags": ["greeting", "phrase", "beginner"],
+      "relatedForms": {
+        "short": "szívesen"
+      },
       "level": 1
     }
   ]

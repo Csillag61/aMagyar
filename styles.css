@@ -231,11 +231,42 @@ body {
     box-shadow: var(--shadow-hover);
 }
 
+.vocab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.3rem;
+}
+
 .vocab-word {
     font-size: 1.8rem;
     font-weight: bold;
     color: var(--primary-color);
-    margin-bottom: 0.3rem;
+}
+
+.audio-btn {
+    background: var(--secondary-color);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.audio-btn:hover {
+    background: #0056b3;
+    transform: scale(1.1);
+}
+
+.audio-btn:active {
+    transform: scale(0.95);
 }
 
 .vocab-pronunciation {
@@ -282,6 +313,147 @@ body {
     padding: 0.3rem 0.6rem;
     border-radius: 12px;
     font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* ===========================
+   Numbers Screen
+   =========================== */
+.numbers-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.number-section {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.number-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.number-card {
+    background: var(--bg-light);
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.number-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--secondary-color);
+}
+
+.number-digit {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.number-word {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.audio-btn-small {
+    background: var(--secondary-color);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 0 auto;
+}
+
+.audio-btn-small:hover {
+    background: #0056b3;
+    transform: scale(1.1);
+}
+
+.number-practice {
+    background: var(--bg-light);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.number-practice p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+#number-input {
+    padding: 0.8rem;
+    font-size: 1.2rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    width: 200px;
+    margin-right: 1rem;
+    text-align: center;
+}
+
+#number-input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+.number-result {
+    margin-top: 2rem;
+    min-height: 100px;
+}
+
+.number-conversion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.conversion-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.conversion-arrow {
+    font-size: 2rem;
+    color: var(--secondary-color);
+}
+
+.conversion-hungarian {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.error {
+    color: #dc3545;
     font-weight: 500;
 }
 
@@ -342,8 +514,13 @@ body {
     to { opacity: 1; transform: translateX(0); }
 }
 
-.grammar-detail.hidden {
+.grammar-detail.hidden,
+.lesson-detail.hidden {
     display: none;
+}
+
+.lesson-detail {
+    animation: slideIn 0.4s ease-out;
 }
 
 .back-btn {
@@ -363,22 +540,95 @@ body {
     border-color: var(--secondary-color);
 }
 
-#grammar-content {
+#grammar-content,
+#lesson-content {
     background: white;
     padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 }
 
-#grammar-content h3 {
+#grammar-content h3,
+#lesson-content h3 {
     color: var(--primary-color);
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-size: 1.5rem;
 }
 
-#grammar-content h3:first-child {
+#grammar-content h3:first-child,
+#lesson-content h3:first-child {
     margin-top: 0;
+}
+
+.lesson-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.lesson-badge {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.lesson-description {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-left: 4px solid var(--secondary-color);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.lesson-story {
+    background: #e7f5ff;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 2px solid #b3e5fc;
+}
+
+.lesson-story h4 {
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.story-content {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.hungarian-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.story-translation {
+    background: #fff9e6;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+}
+
+.translation-label {
+    color: #856404;
+    margin-bottom: 0.5rem;
+}
+
+.english-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #495057;
 }
 
 .grammar-rule {

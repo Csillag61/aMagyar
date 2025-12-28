@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🇭🇺 Learn Hungarian - aMagyar</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="dictionary-1000.js"></script>
     <script src="translate-api.js"></script>
 </head>
 <body>
@@ -19,6 +20,7 @@
         <nav class="main-nav">
             <button class="nav-btn active" data-screen="lessons">📚 Lessons</button>
             <button class="nav-btn" data-screen="vocabulary">📖 Vocabulary</button>
+            <button class="nav-btn" data-screen="numbers">🔢 Numbers</button>
             <button class="nav-btn" data-screen="grammar">🔧 Grammar</button>
             <button class="nav-btn" data-screen="translate">🌐 Translate</button>
             <button class="nav-btn" data-screen="quiz">🎯 Quiz</button>
@@ -34,6 +36,14 @@
                 <p class="screen-desc">Follow the modular lesson sequence</p>
                 <div id="lessons-list" class="lessons-grid">
                     <!-- Populated by JavaScript -->
+                </div>
+                
+                <!-- Lesson Detail View -->
+                <div id="lesson-detail" class="lesson-detail hidden">
+                    <button class="back-btn" onclick="closeLessonDetail()">← Back to Lessons</button>
+                    <div id="lesson-content">
+                        <!-- Populated dynamically -->
+                    </div>
                 </div>
             </div>
 
@@ -51,6 +61,49 @@
                 </div>
                 <div id="vocab-list" class="vocab-grid">
                     <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Numbers Screen -->
+            <div id="numbers-screen" class="screen">
+                <h2>🔢 Hungarian Numbers</h2>
+                <p class="screen-desc">Learn to count in Hungarian - from 0 to millions</p>
+                
+                <div class="numbers-container">
+                    <!-- Basic Numbers 0-20 -->
+                    <div class="number-section">
+                        <h3>Basic Numbers (0-20)</h3>
+                        <div class="numbers-grid" id="basic-numbers">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Tens -->
+                    <div class="number-section">
+                        <h3>Tens (10-90)</h3>
+                        <div class="numbers-grid" id="tens-numbers">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Large Numbers -->
+                    <div class="number-section">
+                        <h3>Large Numbers</h3>
+                        <div class="numbers-grid" id="large-numbers">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Number Practice -->
+                    <div class="number-section">
+                        <h3>Practice</h3>
+                        <div class="number-practice">
+                            <p>Enter a number (1-999) to see it in Hungarian:</p>
+                            <input type="number" id="number-input" min="0" max="999" placeholder="Enter a number...">
+                            <button class="btn-primary" onclick="convertNumber()">Convert</button>
+                            <div id="number-result" class="number-result"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
