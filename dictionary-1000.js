@@ -202,16 +202,16 @@ const localDictionary = {
         'ban/ben': 'in', 'on/en/ön': 'on', 'nál/nél': 'at',
         
         // === COMMON PHRASES ===
-        'hogy vagy': 'how are you', 'jól vagyok': 'I am fine',
-        'mi a neved': 'what is your name', 'nem értem': 'I don\'t understand',
-        'beszélsz angolul': 'do you speak english', 'beszélek magyarul': 'I speak hungarian',
-        'hol van': 'where is', 'mennyibe kerül': 'how much does it cost',
-        'szeretnék': 'I would like', 'szükségem van': 'I need',
+        'Hogy vagy?': 'How are you?', 'Jól vagyok': 'I am fine',
+        'Mi a neved?': 'What is your name?', 'Nem értem': 'I don\'t understand',
+        'Beszélsz angolul?': 'Do you speak English?', 'Beszélek magyarul': 'I speak Hungarian',
+        'Hol van?': 'Where is?', 'Mennyibe kerül?': 'How much does it cost?',
+        'Szeretnék': 'I would like', 'Szükségem van': 'I need',
         
         // === COUNTRIES & LANGUAGES ===
-        'magyarország': 'hungary', 'magyar': 'hungarian', 'amerika': 'america',
-        'anglia': 'england', 'németország': 'germany', 'franciaország': 'france',
-        'spanyolország': 'spain', 'olaszország': 'italy', 'oroszország': 'russia',
+        'Magyarország': 'Hungary', 'magyar': 'Hungarian', 'Amerika': 'America',
+        'Anglia': 'England', 'Németország': 'Germany', 'Franciaország': 'France',
+        'Spanyolország': 'Spain', 'Olaszország': 'Italy', 'Oroszország': 'Russia',
         
         // === MISC ===
         'dolog': 'thing', 'név': 'name', 'cím': 'address', 'szám': 'number',
@@ -236,7 +236,7 @@ const localDictionary = {
         'mutatni': 'to show', 'mutatok': 'I show', 'mutatsz': 'you show', 'mutat': 'shows',
         'mondani': 'to say/tell', 'mondok': 'I say', 'mondasz': 'you say', 'mond': 'says',
         'kérdezni': 'to ask', 'kérdezek': 'I ask', 'kérdezel': 'you ask', 'kérdez': 'asks',
-        'felejelni': 'to answer', 'felelek': 'I answer', 'felelsz': 'you answer', 'felel': 'answers',
+        'felelni': 'to answer', 'felelek': 'I answer', 'felelsz': 'you answer', 'felel': 'answers',
         'emlékezni': 'to remember', 'emlékezek': 'I remember', 'emlékezel': 'you remember', 'emlékszik': 'remembers',
         'felejteni': 'to forget', 'felejtek': 'I forget', 'felejtesz': 'you forget', 'felejt': 'forgets',
         'tanulni': 'to learn', 'próbálni': 'to try', 'próbálok': 'I try', 'próbálsz': 'you try', 'próbál': 'tries',
@@ -332,7 +332,7 @@ const localDictionary = {
         'rák': 'crab', 'homár': 'lobster', 'kagyló': 'shell/clam',
         
         // === TECHNOLOGY & MODERN LIFE ===
-        'gép': 'machine', 'motor': 'engine', 'kerék': 'wheel', 'battery': 'battery',
+        'gép': 'machine', 'motor': 'engine', 'kerék': 'wheel', 'elem': 'battery',
         'elektromosság': 'electricity', 'energia': 'energy', 'áram': 'current/electricity',
         'billentyűzet': 'keyboard', 'egér': 'mouse', 'monitor': 'monitor', 'képernyő': 'screen',
         'hangszóró': 'speaker', 'mikrofon': 'microphone', 'kamera': 'camera', 'videó': 'video',
@@ -570,9 +570,9 @@ const localDictionary = {
         'I would like': 'szeretnék', 'I need': 'szükségem van',
         
         // === COUNTRIES ===
-        'hungary': 'magyarország', 'hungarian': 'magyar', 'america': 'amerika',
-        'england': 'anglia', 'germany': 'németország', 'france': 'franciaország',
-        'spain': 'spanyolország', 'italy': 'olaszország', 'russia': 'oroszország',
+        'Hungary': 'Magyarország', 'hungarian': 'magyar', 'America': 'Amerika',
+        'England': 'Anglia', 'Germany': 'Németország', 'France': 'Franciaország',
+        'Spain': 'Spanyolország', 'Italy': 'Olaszország', 'Russia': 'Oroszország',
         
         // === MISC ===
         'thing': 'dolog', 'name': 'név', 'address': 'cím', 'number': 'szám',

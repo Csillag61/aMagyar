@@ -383,21 +383,56 @@ function startQuiz(type) {
     showQuestion();
 }
 
+function backToQuizOptions() {
+    document.querySelector('.quiz-options').style.display = 'flex';
+    document.getElementById('quiz-container').classList.add('hidden');
+    currentQuestionIndex = 0;
+    quizScore = 0;
+}
+
 function generateFlashcards() {
-    // Use first 100 vocabulary words
-    currentQuizQuestions = vocabularyData.slice(0, 100).map(word => ({
+    // Use vocabulary data plus local dictionary for 1000+ words
+    const vocabCards = vocabularyData.map(word => ({
         type: 'flashcard',
         front: word.word,
         back: word.translation,
         word: word
     }));
+    
+    // Add words from localDictionary if available
+    if (typeof localDictionary !== 'undefined' && localDictionary['hu-en']) {
+        const dictEntries = Object.entries(localDictionary['hu-en']);
+        const dictCards = dictEntries.map(([hungarian, english], index) => ({
+            type: 'flashcard',
+            front: hungarian,
+            back: english,
+            word: { id: 200 + index + 1, word: hungarian, translation: english }
+        }));
+        currentQuizQuestions = [...vocabCards, ...dictCards];
+    } else {
+        currentQuizQuestions = vocabCards;
+    }
 }
 
 function generateMultipleChoice() {
-    currentQuizQuestions = vocabularyData.slice(0, 10).map(word => {
+    // Combine vocabulary and dictionary words
+    let allWords = [...vocabularyData];
+    if (typeof localDictionary !== 'undefined' && localDictionary['hu-en']) {
+        const dictEntries = Object.entries(localDictionary['hu-en']);
+        const dictWords = dictEntries.map(([hungarian, english], index) => ({
+            id: 200 + index + 1,
+            word: hungarian,
+            translation: english
+        }));
+        allWords = [...allWords, ...dictWords];
+    }
+    
+    // Shuffle and take 50 random words
+    const shuffled = allWords.sort(() => Math.random() - 0.5);
+    currentQuizQuestions = shuffled.slice(0, 50).map(word => {
         // Generate 3 wrong answers
-        const wrongAnswers = vocabularyData
-            .filter(w => w.id !== word.id)
+        const wrongAnswers = allWords
+            .filter(w => w.id !== word.id && w.translation !== word.translation)
             .sort(() => Math.random() - 0.5)
             .slice(0, 3)
             .map(w => w.translation);
@@ -415,13 +450,14 @@ function generateMultipleChoice() {
 
 function generateFillBlanks() {
     currentQuizQuestions = vocabularyData
-        .filter(w => w.exampleSentence)
-        .slice(0, 10)
+        .filter(w => w.exampleSentence && w.exampleTranslation)
+        .sort(() => Math.random() - 0.5)
         .map(word => ({
             type: 'fill-blank',
-            question: word.exampleSentence.replace(word.word, '____'),
-            hint: word.translation,
-            correct: word.word
+            question: word.exampleTranslation,
+            hint: `Key word: "${word.translation}" = "${word.word}"`,
+            correct: word.exampleSentence.toLowerCase().trim(),
+            displayCorrect: word.exampleSentence
         }));
 }
 
@@ -450,23 +486,36 @@ function showQuestion() {
         const startIdx = Math.floor(currentQuestionIndex / 12) * 12;
         const endIdx = Math.min(startIdx + 12, currentQuizQuestions.length);
         const cardsToShow = currentQuizQuestions.slice(startIdx, endIdx);
+        const totalPages = Math.ceil(currentQuizQuestions.length / 12);
         
         questionDiv.innerHTML = `
             <h3>Click each card to reveal the answer (${startIdx + 1}-${endIdx} of ${currentQuizQuestions.length})</h3>
             <div class="flashcards-grid">
-                ${cardsToShow.map((card, idx) => `
-                    <div class="flashcard-wrapper" onclick="flipSingleCard(${startIdx + idx})">
-                        <div class="flashcard" id="flashcard-${startIdx + idx}">
-                            <div class="flashcard-front">${card.front}</div>
+                ${cardsToShow.map((card, idx) => {
+                    const ipa = card.word && card.word.ipa ? card.word.ipa : '';
+                    return `
+                    <div class="flashcard-wrapper">
+                        <div class="flashcard" id="flashcard-${startIdx + idx}" onclick="flipSingleCard(${startIdx + idx})">
+                            <div class="flashcard-front">
+                                <button class="flashcard-speaker" onclick="event.stopPropagation(); speakHungarian('${card.front.replace(/'/g, "\\'")}', event)" title="Listen to pronunciation">🔊</button>
+                                <div class="flashcard-word">${card.front}</div>
+                                ${ipa ? `<div class="flashcard-ipa">/${ipa}/</div>` : ''}
+                            </div>
                             <div class="flashcard-back">${card.back}</div>
                         </div>
                     </div>
-                `).join('')}
+                `;
+                }).join('')}
+            </div>
+            <div class="flashcard-pagination">
+                ${Array.from({length: totalPages}, (_, i) => {
+                    const pageNum = (i + 1) * 12;
+                    const isActive = Math.floor(currentQuestionIndex / 12) === i;
+                    return `<button class="page-btn ${isActive ? 'active' : ''}" onclick="goToPage(${i})">${pageNum}</button>`;
+                }).join('')}
             </div>
         `;
-        setTimeout(() => {
-            nextBtn.classList.remove('hidden');
-        }, 500);
+        nextBtn.classList.add('hidden');
     } else if (question.type === 'multiple-choice') {
         questionDiv.innerHTML = `
             <h3>${question.question}</h3>
@@ -480,11 +529,15 @@ function showQuestion() {
         `;
     } else if (question.type === 'fill-blank') {
         questionDiv.innerHTML = `
-            <h3>Fill in the blank:</h3>
-            <p style="font-size: 1.2rem; margin: 1rem 0;">${question.question}</p>
-            <p style="color: #6c757d; margin-bottom: 1rem;">Hint: ${question.hint}</p>
-            <input type="text" class="quiz-input" id="fill-answer" placeholder="Type your answer">
-            <button class="btn-primary" onclick="checkFillBlank('${question.correct}')">Submit</button>
+            <h3>Translate this sentence to Hungarian:</h3>
+            <p style="font-size: 1.3rem; margin: 1.5rem 0; font-weight: 600; color: #495057;">
+                ${question.question}
+            </p>
+            <p style="color: #6c757d; margin-bottom: 1rem; font-size: 0.95rem;">
+                💡 ${question.hint}
+            </p>
+            <input type="text" class="quiz-input" id="fill-answer" placeholder="Type the full Hungarian sentence..." autocomplete="off">
+            <button class="btn-primary" onclick="checkFillBlank('${question.correct.replace(/'/g, "\\'")}', '${question.displayCorrect.replace(/'/g, "\\'")}')">Submit</button>
         `;
     }
 }
@@ -499,6 +552,11 @@ function flipCard() {
 function flipSingleCard(index) {
     const card = document.getElementById(`flashcard-${index}`);
     if (card) card.classList.toggle('flipped');
+}
+
+function goToPage(pageIndex) {
+    currentQuestionIndex = pageIndex * 12;
+    showQuestion();
 }
 
 function checkAnswer(selected, correct, btnIndex) {
@@ -530,18 +588,24 @@ function checkAnswer(selected, correct, btnIndex) {
     nextBtn.classList.remove('hidden');
 }
 
-function checkFillBlank(correct) {
+function checkFillBlank(correct, displayCorrect) {
     const answer = document.getElementById('fill-answer').value.trim().toLowerCase();
     const correctAnswer = correct.toLowerCase();
     const feedbackDiv = document.getElementById('quiz-feedback');
     const nextBtn = document.getElementById('quiz-next');
     
     if (answer === correctAnswer) {
-        feedbackDiv.textContent = '✅ Correct! Well done!';
+        feedbackDiv.innerHTML = `
+            ✅ Correct! Well done!
+            <button class="speaker-btn" onclick="speakHungarian('${displayCorrect.replace(/'/g, "\\'")}', event)" style="margin-left: 10px;">🔊 Hear it</button>
+        `;
         feedbackDiv.className = 'quiz-feedback correct';
         quizScore++;
     } else {
-        feedbackDiv.textContent = `❌ Incorrect. The correct answer is: ${correct}`;
+        feedbackDiv.innerHTML = `
+            ❌ Incorrect. The correct answer is: <strong>${displayCorrect}</strong>
+            <button class="speaker-btn" onclick="speakHungarian('${displayCorrect.replace(/'/g, "\\'")}', event)" style="margin-left: 10px;">🔊 Hear correct answer</button>
+        `;
         feedbackDiv.className = 'quiz-feedback incorrect';
     }
     
