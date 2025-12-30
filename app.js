@@ -384,8 +384,8 @@ function startQuiz(type) {
 }
 
 function generateFlashcards() {
-    // Use first 10 vocabulary words
-    currentQuizQuestions = vocabularyData.slice(0, 10).map(word => ({
+    // Use first 100 vocabulary words
+    currentQuizQuestions = vocabularyData.slice(0, 100).map(word => ({
         type: 'flashcard',
         front: word.word,
         back: word.translation,
@@ -446,10 +446,22 @@ function showQuestion() {
     
     // Render question based on type
     if (question.type === 'flashcard') {
+        // Show 12 cards per page
+        const startIdx = Math.floor(currentQuestionIndex / 12) * 12;
+        const endIdx = Math.min(startIdx + 12, currentQuizQuestions.length);
+        const cardsToShow = currentQuizQuestions.slice(startIdx, endIdx);
+        
         questionDiv.innerHTML = `
-            <h3>Click the card to reveal the answer</h3>
-            <div class="flashcard" id="flashcard" onclick="flipCard()">
-                <div>${question.front}</div>
+            <h3>Click each card to reveal the answer (${startIdx + 1}-${endIdx} of ${currentQuizQuestions.length})</h3>
+            <div class="flashcards-grid">
+                ${cardsToShow.map((card, idx) => `
+                    <div class="flashcard-wrapper" onclick="flipSingleCard(${startIdx + idx})">
+                        <div class="flashcard" id="flashcard-${startIdx + idx}">
+                            <div class="flashcard-front">${card.front}</div>
+                            <div class="flashcard-back">${card.back}</div>
+                        </div>
+                    </div>
+                `).join('')}
             </div>
         `;
         setTimeout(() => {
@@ -481,17 +493,12 @@ let cardFlipped = false;
 
 function flipCard() {
     const card = document.getElementById('flashcard');
-    const question = currentQuizQuestions[currentQuestionIndex];
-    
-    if (!cardFlipped) {
-        card.textContent = question.back;
-        card.classList.add('flipped');
-        cardFlipped = true;
-    } else {
-        card.textContent = question.front;
-        card.classList.remove('flipped');
-        cardFlipped = false;
-    }
+    if (card) card.classList.toggle('flipped');
+}
+
+function flipSingleCard(index) {
+    const card = document.getElementById(`flashcard-${index}`);
+    if (card) card.classList.toggle('flipped');
 }
 
 function checkAnswer(selected, correct, btnIndex) {
@@ -544,7 +551,9 @@ function checkFillBlank(correct) {
 
 function nextQuestion() {
     cardFlipped = false;
-    currentQuestionIndex++;
+    // Jump to next set of 12 cards
+    const currentPage = Math.floor(currentQuestionIndex / 12);
+    currentQuestionIndex = (currentPage + 1) * 12;
     showQuestion();
 }
 
