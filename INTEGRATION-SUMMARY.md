@@ -4,13 +4,17 @@
 
 ### 📦 **New Files Created**
 
-1. **translate-api.js** (370 lines)
+1. **translate-api.js** (230+ lines)
    - Complete LibreTranslate API wrapper
+   - Local server support (http://localhost:5000)
    - Smart caching system (LRU cache)
-   - Rate limiting protection
-   - Multi-endpoint failover
    - Error handling and recovery
+   - Offline dictionary fallback (1000+ words)
    - Batch translation support
+
+2. **favicon.svg**
+   - Hungarian flag colors (red-white-green)
+   - SVG format for modern browsers
 
 2. **TRANSLATION.md** (300+ lines)
    - Complete documentation
@@ -61,13 +65,27 @@
 ### ✨ **Translation Capabilities**
 
 #### **Text Translation Mode**
-- ✅ Real-time translation
-- ✅ 5+ languages supported
+- ✅ Real-time translation via local LibreTranslate server
+- ✅ 5+ languages supported (Hungarian, English, German, French, Spanish)
 - ✅ Auto-language detection
 - ✅ Swap languages instantly
 - ✅ Copy to clipboard
 - ✅ Character counter
 - ✅ Save to vocabulary
+- ✅ **File Upload Support:**
+  - Text files (.txt, .md)
+  - PDF documents (text-based or scanned)
+  - Images with OCR (.jpg, .png, .gif, .bmp, .webp)
+- ✅ **OCR Processing:**
+  - Tesseract.js for text extraction
+  - Progress indicator
+  - English + Hungarian language support
+  - Handles multi-page scanned PDFs
+- ✅ **Hybrid Flashcards:**
+  - LibreTranslate translation first
+  - Falls back to curated translations
+  - Shows translation source (🤖 AI or 📚 Curated)
+  - Works offline with 1000+ word dictionary
 
 #### **Vocabulary Helper Mode**
 - ✅ Search existing vocabulary

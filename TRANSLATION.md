@@ -2,7 +2,39 @@
 
 ## Overview
 
-The Hungarian learning app now includes a powerful, free, and open-source translation module powered by **LibreTranslate**. This module provides real-time translation capabilities with intelligent caching, rate limiting, and multiple endpoint failover support.
+The Hungarian learning app includes a powerful, free, and open-source translation module powered by **LibreTranslate**. The app uses a local LibreTranslate server running via Podman/Docker for unlimited, free translations with full privacy.
+
+## Setup LibreTranslate Local Server
+
+### Prerequisites
+- Podman or Docker installed on Windows
+- Python 3.x for the web server
+
+### Quick Start
+
+1. **Start LibreTranslate Server:**
+   ```powershell
+   podman run -p 5000:5000 libretranslate/libretranslate
+   ```
+   The server will be available at `http://localhost:5000`
+
+2. **Start the App:**
+   ```powershell
+   cd f:\aMagyar
+   python -m http.server 8000
+   ```
+   Open `http://localhost:8000` in your browser
+
+3. **That's it!** The app automatically connects to your local LibreTranslate server.
+
+### Configuration
+
+The app is pre-configured to use `http://localhost:5000` in `translate-api.js`:
+
+```javascript
+const API_URL = 'http://localhost:5000/translate';
+const USE_API = true;
+```
 
 ## Features Implemented
 
@@ -14,6 +46,15 @@ The Hungarian learning app now includes a powerful, free, and open-source transl
 - Swap languages with one click
 - Copy translations to clipboard
 - Character counter
+- **File Upload Support:**
+  - Text files (.txt, .md) - up to 10MB
+  - PDF documents (text-based or scanned)
+  - Images (.jpg, .png, .gif, .bmp, .webp) with OCR
+- **OCR (Optical Character Recognition):**
+  - Automatically extracts text from images
+  - Supports scanned PDFs
+  - Progress indicator during processing
+  - Supports English and Hungarian text
 - Save translations to vocabulary
 - Visual loading states and error handling
 

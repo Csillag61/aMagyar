@@ -396,7 +396,8 @@ function generateFlashcards() {
         type: 'flashcard',
         front: word.word,
         back: word.translation,
-        word: word
+        word: word,
+        originalTranslation: word.translation
     }));
     
     // Add words from localDictionary if available
@@ -406,7 +407,8 @@ function generateFlashcards() {
             type: 'flashcard',
             front: hungarian,
             back: english,
-            word: { id: 200 + index + 1, word: hungarian, translation: english }
+            word: { id: 200 + index + 1, word: hungarian, translation: english },
+            originalTranslation: english
         }));
         currentQuizQuestions = [...vocabCards, ...dictCards];
     } else {
@@ -492,16 +494,19 @@ function showQuestion() {
             <h3>Click each card to reveal the answer (${startIdx + 1}-${endIdx} of ${currentQuizQuestions.length})</h3>
             <div class="flashcards-grid">
                 ${cardsToShow.map((card, idx) => {
+                    const globalIdx = startIdx + idx;
                     const ipa = card.word && card.word.ipa ? card.word.ipa : '';
                     return `
                     <div class="flashcard-wrapper">
-                        <div class="flashcard" id="flashcard-${startIdx + idx}" onclick="flipSingleCard(${startIdx + idx})">
+                        <div class="flashcard" id="flashcard-${globalIdx}" onclick="flipSingleCard(${globalIdx})">
                             <div class="flashcard-front">
                                 <button class="flashcard-speaker" onclick="event.stopPropagation(); speakHungarian('${card.front.replace(/'/g, "\\'")}', event)" title="Listen to pronunciation">🔊</button>
                                 <div class="flashcard-word">${card.front}</div>
                                 ${ipa ? `<div class="flashcard-ipa">/${ipa}/</div>` : ''}
                             </div>
-                            <div class="flashcard-back">${card.back}</div>
+                            <div class="flashcard-back">
+                                <div class="translation-loading" id="flashcard-translation-${globalIdx}">⏳ Translating...</div>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -515,6 +520,13 @@ function showQuestion() {
                 }).join('')}
             </div>
         `;
+        
+        // Load translations for all cards
+        cardsToShow.forEach((card, idx) => {
+            const globalIdx = startIdx + idx;
+            loadFlashcardTranslation(card, globalIdx);
+        });
+        
         nextBtn.classList.add('hidden');
     } else if (question.type === 'multiple-choice') {
         questionDiv.innerHTML = `
@@ -552,6 +564,104 @@ function flipCard() {
 function flipSingleCard(index) {
     const card = document.getElementById(`flashcard-${index}`);
     if (card) card.classList.toggle('flipped');
+}
+
+/**
+ * Try to translate Hungarian to English using LibreTranslate
+ */
+async function tryTranslateHuToEn(text) {
+    const LT_URL = "http://localhost:5000";
+    
+    try {
+        const payload = {
+            q: text,
+            source: "hu",
+            target: "en",
+            format: "text"
+        };
+
+        const response = await fetch(`${LT_URL}/translate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            return null;
+        }
+
+        const data = await response.json();
+        return data.translatedText || null;
+
+    } catch (err) {
+        return null;
+    }
+}
+
+/**
+ * Get flashcard back translation with random LT usage
+ */
+async function getFlashcardBackRandom(card, probability = 0.3) {
+    if (Math.random() < probability) {
+        const lt = await tryTranslateHuToEn(card.front);
+        if (lt) return { translation: lt, source: 'libretranslate' };
+    }
+    return { translation: card.originalTranslation, source: 'curated' };
+}
+
+/**
+ * Load flashcard translation (random: sometimes LibreTranslate, sometimes original)
+ */
+async function loadFlashcardTranslation(card, index) {
+    const translationDiv = document.getElementById(`flashcard-translation-${index}`);
+    if (!translationDiv) return;
+    
+    // Randomly decide whether to use LibreTranslate (70% chance for testing)
+    const result = await getFlashcardBackRandom(card, 0.7);
+    
+    console.log(`Card: ${card.front} -> Source: ${result.source}, Translation: ${result.translation}`);
+    
+    if (result.source === 'libretranslate') {
+        // LibreTranslate was used
+        translationDiv.innerHTML = `
+            <div class="translation-primary">${result.translation}</div>
+            <div class="translation-source">🌐 LibreTranslate</div>
+        `;
+    } else {
+        // Curated translation was used
+        translationDiv.innerHTML = `
+            <div class="translation-primary">${result.translation}</div>
+            <div class="translation-source">📚 Curated</div>
+        `;
+    }
+}
+
+/**
+ * Load alternative translation from LibreTranslate
+ */
+async function loadAlternativeTranslation(card, index) {
+    const altDiv = document.getElementById(`alt-translation-${index}`);
+    if (!altDiv) return;
+    
+    try {
+        const result = await translator.translate(card.front, 'hu', 'en');
+        const altTranslation = result.translatedText;
+        
+        // Check if translations are significantly different
+        const original = card.originalTranslation.toLowerCase().trim();
+        const alternative = altTranslation.toLowerCase().trim();
+        
+        if (original === alternative) {
+            // Same translation, show confirmation
+            altDiv.innerHTML = `<div class="translation-alternative">✓ Confirmed: ${altTranslation}</div>`;
+        } else {
+            // Different translation, show both
+            altDiv.innerHTML = `<div class="translation-alternative">🤖 AI suggests: ${altTranslation}</div>`;
+        }
+    } catch (error) {
+        // LibreTranslate failed, show original only
+        altDiv.innerHTML = `<div class="translation-fallback">📚 Curated translation</div>`;
+    }
 }
 
 function goToPage(pageIndex) {
@@ -783,6 +893,204 @@ function handleTextInput() {
     // Auto-translate if enabled (debounced)
     clearTimeout(translationTimeout);
     // Disabled auto-translate to save API calls
+}
+
+/**
+ * Handle file upload for translation
+ */
+async function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    // Check file size (limit to 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+        alert('File is too large. Please upload a file smaller than 10MB.');
+        return;
+    }
+    
+    const fileName = file.name;
+    const fileExt = fileName.split('.').pop().toLowerCase();
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+    
+    try {
+        let content = '';
+        
+        if (fileExt === 'pdf') {
+            // Handle PDF files
+            content = await extractTextFromPDF(file);
+            if (!content.trim()) {
+                // PDF has no text, try OCR
+                alert('📷 No text found in PDF. Attempting OCR (this may take a moment)...');
+                content = await extractTextFromPDFWithOCR(file);
+            }
+        } else if (imageExtensions.includes(fileExt)) {
+            // Handle image files with OCR
+            showOCRProgress(true);
+            content = await extractTextFromImage(file);
+            showOCRProgress(false);
+        } else {
+            // Handle text files (.txt, .md, etc.)
+            content = await readTextFile(file);
+        }
+        
+        if (!content.trim()) {
+            alert('❌ No text could be extracted from the file.');
+            return;
+        }
+        
+        document.getElementById('source-text').value = content;
+        handleTextInput(); // Update character count
+        
+        // Show notification
+        alert(`✅ File "${fileName}" loaded successfully (${content.length} characters)! Click "Translate" to translate the content.`);
+    } catch (error) {
+        console.error('Error reading file:', error);
+        alert('❌ Error reading file: ' + error.message);
+        showOCRProgress(false);
+    }
+    
+    // Reset file input so the same file can be uploaded again
+    event.target.value = '';
+}
+
+/**
+ * Show/hide OCR progress indicator
+ */
+function showOCRProgress(show, progress = 0, status = 'Processing image...') {
+    const progressDiv = document.getElementById('ocr-progress');
+    const progressFill = document.getElementById('ocr-progress-fill');
+    const progressText = document.getElementById('ocr-progress-text');
+    
+    if (progressDiv) {
+        progressDiv.style.display = show ? 'block' : 'none';
+        if (show && progressFill && progressText) {
+            progressFill.style.width = `${progress}%`;
+            progressText.textContent = status;
+        }
+    }
+}
+
+/**
+ * Read text file
+ */
+function readTextFile(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = () => reject(new Error('Failed to read file'));
+        reader.readAsText(file);
+    });
+}
+
+/**
+ * Extract text from PDF file
+ */
+async function extractTextFromPDF(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        
+        reader.onload = async function(e) {
+            try {
+                const typedarray = new Uint8Array(e.target.result);
+                
+                // Configure PDF.js worker
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                
+                // Load the PDF
+                const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                let fullText = '';
+                
+                // Extract text from each page
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    fullText += pageText + '\n\n';
+                }
+                
+                resolve(fullText.trim());
+            } catch (error) {
+                reject(error);
+            }
+        };
+        
+        reader.onerror = () => reject(new Error('Failed to read PDF file'));
+        reader.readAsArrayBuffer(file);
+    });
+}
+
+/**
+ * Extract text from scanned PDF using OCR
+ */
+async function extractTextFromPDFWithOCR(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        
+        reader.onload = async function(e) {
+            try {
+                const typedarray = new Uint8Array(e.target.result);
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                
+                const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                let fullText = '';
+                
+                showOCRProgress(true, 0, 'Processing PDF pages...');
+                
+                // Process each page
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const viewport = page.getViewport({ scale: 2.0 });
+                    
+                    // Create canvas to render page
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    
+                    await page.render({ canvasContext: context, viewport: viewport }).promise;
+                    
+                    // OCR the rendered page
+                    const progress = Math.round((pageNum / pdf.numPages) * 100);
+                    showOCRProgress(true, progress, `OCR Page ${pageNum}/${pdf.numPages}...`);
+                    
+                    const result = await Tesseract.recognize(canvas, 'eng+hun', {
+                        logger: m => console.log(m)
+                    });
+                    
+                    fullText += result.data.text + '\n\n';
+                }
+                
+                resolve(fullText.trim());
+            } catch (error) {
+                reject(error);
+            }
+        };
+        
+        reader.onerror = () => reject(new Error('Failed to read PDF file'));
+        reader.readAsArrayBuffer(file);
+    });
+}
+
+/**
+ * Extract text from image using OCR
+ */
+async function extractTextFromImage(file) {
+    try {
+        showOCRProgress(true, 10, 'Loading image...');
+        
+        const result = await Tesseract.recognize(file, 'eng+hun', {
+            logger: m => {
+                if (m.status === 'recognizing text') {
+                    const progress = Math.round(m.progress * 100);
+                    showOCRProgress(true, progress, `Recognizing text: ${progress}%`);
+                }
+            }
+        });
+        
+        return result.data.text;
+    } catch (error) {
+        throw new Error('OCR failed: ' + error.message);
+    }
 }
 
 /**
@@ -1072,6 +1380,13 @@ async function performBatchTranslation() {
         return;
     }
     
+    // Limit to 50 lines to prevent server overload
+    const MAX_BATCH_LINES = 50;
+    if (lines.length > MAX_BATCH_LINES) {
+        alert(`⚠️ Batch translation is limited to ${MAX_BATCH_LINES} lines at a time.\nYou have ${lines.length} lines.\n\nPlease split your text into smaller batches.`);
+        return;
+    }
+    
     // Show loading
     resultsDiv.innerHTML = '<p style="text-align: center;">⏳ Translating ' + lines.length + ' lines...</p>';
     updateAPIStatus('loading', 'Batch translating...');
@@ -1098,7 +1413,7 @@ async function performBatchTranslation() {
             }
         }).join('');
         
-        updateAPIStatus('active', 'Batch translation complete');
+        updateAPIStatus('active', `Batch translation complete (${lines.length} lines)`);
         updateCacheInfo();
         
     } catch (error) {

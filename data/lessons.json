@@ -32,7 +32,7 @@
       ],
       "story": {
         "title": "Meeting Péter",
-        "content": "Szia! Én vagyok Péter. Hogy vagy? Jól vagyok, köszönöm. És te? Én is jól vagyok.",
+        "content": "Szia! Én Péter vagyok. Hogy vagy? Jól vagyok, köszönöm. És te? Én is jól vagyok.",
         "translation": "Hi! I am Peter. How are you? I'm well, thank you. And you? I am also well."
       },
       "quiz": [
@@ -71,7 +71,7 @@
       ],
       "story": {
         "title": "At the Market",
-        "content": "Péter a piacon van. Vásárol egy almát és egy vizet. Éhes és szomjas. Eszi az almát és issza a vizet. Finom!",
+        "content": "Peter a piacon van. Almát és vizet vesz. Éhes és szomjas. Megeszi az almát és megissza a vizet. Finom!",
         "translation": "Peter is at the market. He buys an apple and water. He is hungry and thirsty. He eats the apple and drinks the water. Delicious!"
       },
       "quiz": [
@@ -110,7 +110,7 @@
       ],
       "story": {
         "title": "Counting Apples",
-        "content": "Egy alma. Két alma. Három alma. Hány alma van? Öt alma van az asztalon.",
+        "content": "Egy alma. Két alma. Három alma. Négy alma. Öt alma. Hány alma van? Öt alma van az asztalon.",
         "translation": "One apple. Two apples. Three apples. How many apples are there? Five apples are on the table."
       },
       "quiz": [
@@ -144,7 +144,7 @@
       ],
       "story": {
         "title": "Daily Routine",
-        "content": "Reggel eszem. Délelőtt dolgozom. Délután tanulok. Este iszom egy teát. Éjszaka alszom.",
+        "content": "Reggel eszem. Délelőtt dolgozom. Délután tanulok. Este teát iszom. Éjszaka alszom.",
         "translation": "In the morning I eat. In the morning I work. In the afternoon I study. In the evening I drink tea. At night I sleep."
       },
       "quiz": [
@@ -165,19 +165,19 @@
       "grammarIds": [4],
       "phrases": [
         {
-          "hungarian": "Ez az anyám.",
+          "hungarian": "Ez az édesanyám.",
           "english": "This is my mother.",
           "usage": "Introducing family"
         },
         {
-          "hungarian": "Az az apám.",
+          "hungarian": "Az az édesapám.",
           "english": "That is my father.",
           "usage": "Pointing out family"
         }
       ],
       "story": {
         "title": "My Family",
-        "content": "A családom nagy. Van anyám, apám, és egy testvérem. Az anyám kedves. Az apám dolgozik. A testvérem tanul.",
+        "content": "A családom nagy. Van édesanyám, édesapám, és egy testvérem. Az édesanyám kedves. Az édesapám dolgozik. A testvérem tanul.",
         "translation": "My family is big. I have my mother, my father, and one sibling. My mother is kind. My father works. My sibling studies."
       },
       "quiz": [

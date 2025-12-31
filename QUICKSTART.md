@@ -12,21 +12,31 @@
 
 ## How to Use Right Now
 
-### Option 1: Direct File Opening
-1. Navigate to `f:\aMagyar\`
-2. Double-click `index.html`
-3. App opens in your default browser ✨
+### Step 1: Start LibreTranslate (Optional but Recommended)
 
-### Option 2: Local Server (Better)
+**Using Podman:**
+```powershell
+podman run -p 5000:5000 libretranslate/libretranslate
+```
+
+This enables full translation features. If you skip this, the app will still work with the offline dictionary.
+
+### Step 2: Start the Web App
+
 Open PowerShell in the project folder and run:
 
 ```powershell
-# If you have Python installed
+# Start local web server
 python -m http.server 8000
 
 # Then open browser to:
 # http://localhost:8000
 ```
+
+### Alternative: Direct File Opening
+1. Navigate to `f:\aMagyar\`
+2. Double-click `index.html`
+3. App opens in your default browser (limited translation features)
 
 ### Option 3: VS Code Live Server
 1. Open the `aMagyar` folder in VS Code
@@ -55,10 +65,25 @@ python -m http.server 8000
 ### 🎯 **Quiz Tab**
 Three quiz types:
 - **🃏 Flashcards:** Click card to flip and see answer
+  - Hybrid system: tries LibreTranslate first, falls back to curated translations
+  - Shows translation source: 🤖 LibreTranslate or 📚 Curated
+  - Works offline with your curated translations
 - **✅ Multiple Choice:** Select correct translation
 - **✏️ Fill in Blank:** Type the missing word
 
 After completion, see your score and percentage!
+
+### 🌐 **Translate Tab**
+- **Text Translation:** Type or paste text to translate
+- **File Upload:** Upload .txt, .pdf, or image files (📁 button)
+- **OCR Support:** Automatically extracts text from images and scanned PDFs
+- **LibreTranslate:** Uses local server for unlimited free translation
+- **Offline Dictionary:** 1000+ words work without internet
+
+**Supported Formats:**
+- Text files (.txt, .md)
+- PDF documents (text-based or scanned)
+- Images (.jpg, .png, .gif, .bmp, .webp) - uses OCR
 
 ### 🧩 **Suffix Builder Tab**
 1. Choose a base word from dropdown

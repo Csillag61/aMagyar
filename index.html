@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🇭🇺 Learn Hungarian - aMagyar</title>
+    <title>Learn Hungarian - aMagyar</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <script src="dictionary-1000.js"></script>
     <script src="translate-api.js"></script>
 </head>
@@ -167,6 +170,16 @@
                                 ></textarea>
                                 <div class="char-count">
                                     <span id="source-char-count">0</span> characters
+                                    <label class="file-upload-btn" title="Upload text, PDF, or image file">
+                                        📁 Upload File
+                                        <input type="file" id="file-upload" accept=".txt,.md,.pdf,.jpg,.jpeg,.png,.gif,.bmp,.webp" onchange="handleFileUpload(event)" style="display: none;">
+                                    </label>
+                                </div>
+                                <div id="ocr-progress" class="ocr-progress" style="display: none;">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="ocr-progress-fill"></div>
+                                    </div>
+                                    <div class="progress-text" id="ocr-progress-text">Processing image...</div>
                                 </div>
                             </div>
                             

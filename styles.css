@@ -825,6 +825,48 @@ body {
 
 .flashcard-back {
     font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.translation-primary {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.translation-source {
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-top: 0.75rem;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 2px solid #dee2e6;
+}
+
+.translation-loading {
+    font-size: 1.5rem;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.translation-alternative {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+}
+
+.translation-fallback {
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-style: italic;
 }
 
 .flashcard-front {
@@ -1133,9 +1175,63 @@ body {
 }
 
 .char-count {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     text-align: right;
     font-size: 0.9rem;
     color: #6c757d;
+}
+
+.file-upload-btn {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background: var(--secondary-color);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.file-upload-btn:hover {
+    background: #3a6a89;
+    transform: translateY(-2px);
+}
+
+.file-upload-btn:active {
+    transform: translateY(0);
+}
+
+.ocr-progress {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 2px solid var(--secondary-color);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+    transition: width 0.3s ease;
+    border-radius: 10px;
+}
+
+.progress-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    font-weight: 500;
 }
 
 .translation-info {
