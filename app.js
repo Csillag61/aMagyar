@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupNavigation();
     renderLessons();
     renderVocabulary();
+    renderColors();
     renderNumbers();
     renderGrammar();
     setupFilters();
@@ -139,6 +140,38 @@ function closeLessonDetail() {
 // ===========================
 // Vocabulary Screen
 // ===========================
+
+// Color mapping for visual display
+const colorMap = {
+    'fehér': '#FFFFFF',
+    'fekete': '#000000',
+    'piros': '#E63946',
+    'kék': '#457B9D',
+    'zöld': '#2D6A4F',
+    'sárga': '#FFD60A',
+    'barna': '#8B4513',
+    'narancs': '#FF8C00',
+    'szürke': '#808080',
+    'rózsaszín': '#FFB6C1',
+    'lila': '#9B59B6',
+    'bordó': '#800020',
+    'türkiz': '#40E0D0',
+    'arany': '#FFD700',
+    'ezüst': '#C0C0C0',
+    'bézs': '#F5F5DC',
+    'krém': '#FFFDD0',
+    'tengerkék': '#000080',
+    'világoskék': '#87CEEB',
+    'sötétkék': '#00008B',
+    'világoszöld': '#90EE90',
+    'sötétzöld': '#013220',
+    'vörös': '#8B0000',
+    'ibolya': '#8F00FF',
+    'korall': '#FF7F50',
+    'olajzöld': '#808000',
+    'citromsárga': '#FFFF66'
+};
+
 function renderVocabulary(filterTag = 'all') {
     const container = document.getElementById('vocab-list');
     if (!container) return;
@@ -147,8 +180,15 @@ function renderVocabulary(filterTag = 'all') {
         ? vocabularyData 
         : vocabularyData.filter(word => word.tags.includes(filterTag));
     
-    container.innerHTML = filteredVocab.map(word => `
-        <div class="vocab-card">
+    container.innerHTML = filteredVocab.map(word => {
+        const isColor = word.tags.includes('color') && colorMap[word.word];
+        const colorSwatch = isColor ? `
+            <div class="color-swatch" style="background-color: ${colorMap[word.word]}; ${word.word === 'fehér' || word.word === 'sárga' || word.word === 'citromsárga' ? 'border: 2px solid #ccc;' : ''}"></div>
+        ` : '';
+        
+        return `
+        <div class="vocab-card ${isColor ? 'color-card' : ''}">
+            ${colorSwatch}
             <div class="vocab-header">
                 <div class="vocab-word">${word.word}</div>
                 <button class="audio-btn" onclick="speakHungarian('${word.word.replace(/'/g, "\\'")}', event)" title="Listen to pronunciation">🔊</button>
@@ -163,7 +203,8 @@ function renderVocabulary(filterTag = 'all') {
                 ${word.tags.map(tag => `<span class="vocab-tag">${tag}</span>`).join('')}
             </div>
         </div>
-    `).join('');
+    `;
+    }).join('');
 }
 
 function setupFilters() {
@@ -181,6 +222,40 @@ function setupFilters() {
             renderVocabulary(tag);
         });
     });
+}
+
+// ===========================
+// Colors Screen
+// ===========================
+function renderColors() {
+    const container = document.getElementById('colors-showcase');
+    if (!container) return;
+    
+    // Get only color vocabulary items
+    const colorWords = vocabularyData.filter(word => word.tags.includes('color'));
+    
+    container.innerHTML = colorWords.map(word => {
+        const hasColorSwatch = colorMap[word.word];
+        const colorSwatch = hasColorSwatch ? `
+            <div class="color-swatch" style="background-color: ${colorMap[word.word]}; ${word.word === 'fehér' || word.word === 'sárga' || word.word === 'citromsárga' ? 'border: 2px solid #ccc;' : ''}"></div>
+        ` : '';
+        
+        return `
+        <div class="vocab-card color-card">
+            ${colorSwatch}
+            <div class="vocab-header">
+                <div class="vocab-word">${word.word}</div>
+                <button class="audio-btn" onclick="speakHungarian('${word.word.replace(/'/g, "\\'")}', event)" title="Listen to pronunciation">🔊</button>
+            </div>
+            <div class="vocab-pronunciation">/${word.ipa}/</div>
+            <div class="vocab-translation">${word.translation}</div>
+            <div class="vocab-example">
+                <div class="vocab-example-hu">${word.exampleSentence}</div>
+                <div class="vocab-example-en">${word.exampleTranslation}</div>
+            </div>
+        </div>
+    `;
+    }).join('');
 }
 
 // ===========================

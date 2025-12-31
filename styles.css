@@ -217,6 +217,13 @@ body {
     gap: 1.5rem;
 }
 
+.colors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
 .vocab-card {
     background: white;
     border: 2px solid #e9ecef;
@@ -229,6 +236,25 @@ body {
 .vocab-card:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-hover);
+}
+
+/* Color vocabulary card with visual swatch */
+.color-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.color-swatch {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    margin: 0 auto 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s;
+}
+
+.color-card:hover .color-swatch {
+    transform: scale(1.1);
 }
 
 .vocab-header {

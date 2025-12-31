@@ -193,8 +193,8 @@
       "title": "Colors",
       "level": 1,
       "order": 6,
-      "description": "Basic color vocabulary and adjective usage",
-      "vocabularyIds": [11, 12],
+      "description": "Comprehensive color vocabulary from basic to advanced shades",
+      "vocabularyIds": [11, 12, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220],
       "grammarIds": [8],
       "phrases": [
         {
@@ -206,12 +206,37 @@
           "hungarian": "A piros alma.",
           "english": "The red apple.",
           "usage": "Describing with color"
+        },
+        {
+          "hungarian": "Világoskék a szemem.",
+          "english": "My eyes are light blue.",
+          "usage": "Describing eye color"
+        },
+        {
+          "hungarian": "Sötétzöld a fenyő.",
+          "english": "The pine tree is dark green.",
+          "usage": "Describing nature"
+        },
+        {
+          "hungarian": "Színes a szivárvány.",
+          "english": "The rainbow is colorful.",
+          "usage": "Describing multiple colors"
+        },
+        {
+          "hungarian": "Fehér, fekete, és szürke.",
+          "english": "White, black, and gray.",
+          "usage": "Neutral colors"
+        },
+        {
+          "hungarian": "Arany gyűrű és ezüst nyaklánc.",
+          "english": "Gold ring and silver necklace.",
+          "usage": "Metallic colors"
         }
       ],
       "story": {
-        "title": "Colors Around Us",
-        "content": "Az ég kék. Az alma piros. A fű zöld. A nap sárga. Sok szín van!",
-        "translation": "The sky is blue. The apple is red. The grass is green. The sun is yellow. There are many colors!"
+        "title": "A Színes Világ - The Colorful World",
+        "content": "A világ tele van színekkel! Az ég kék, a felhők fehérek. A nap sárga, az éjszaka fekete. A fű zöld, a rózsák pirosak és rózsaszínek. Az őszi levelek narancsak, barnák és sárgák. A tenger türkiz, a homok bézs színű. A lila ibolyák gyönyörűek! Nézd a színes szivárványt - piros, narancs, sárga, zöld, kék, és lila! Milyen csodálatos!",
+        "translation": "The world is full of colors! The sky is blue, the clouds are white. The sun is yellow, the night is black. The grass is green, the roses are red and pink. The autumn leaves are orange, brown and yellow. The sea is turquoise, the sand is beige. The purple violets are beautiful! Look at the colorful rainbow - red, orange, yellow, green, blue, and purple! How wonderful!"
       },
       "quiz": [
         {
@@ -219,6 +244,24 @@
           "question": "What is 'blue' in Hungarian?",
           "options": ["piros", "kék", "zöld", "sárga"],
           "correct": "kék"
+        },
+        {
+          "type": "multiple-choice",
+          "question": "What is 'purple' in Hungarian?",
+          "options": ["lila", "rózsaszín", "fekete", "fehér"],
+          "correct": "lila"
+        },
+        {
+          "type": "multiple-choice",
+          "question": "What is 'light blue' in Hungarian?",
+          "options": ["sötétkék", "világoskék", "tengerkék", "türkiz"],
+          "correct": "világoskék"
+        },
+        {
+          "type": "multiple-choice",
+          "question": "What color is 'arany'?",
+          "options": ["silver", "gold", "bronze", "copper"],
+          "correct": "gold"
         }
       ]
     },
