@@ -1,0 +1,21 @@
+# Hungarian Learning App - Python Dependencies
+# This file lists Python packages needed for the project
+
+# LibreTranslate - Free and Open Source Machine Translation API
+# Note: Currently using Podman container, but can be installed locally
+libretranslate==1.6.1
+
+# Alternative: Install only if running LibreTranslate locally
+# argostranslate==1.9.6
+# flask==3.0.0
+# flask-cors==4.0.0
+# flask-swagger==0.2.14
+# flask-swagger-ui==4.11.1
+# waitress==2.1.2
+# expiringdict==1.2.2
+# langdetect==1.0.9
+# morfessor==2.0.6
+# polyglot==16.7.4
+# pycld2==0.41
+# redis==5.0.1
+# requests==2.31.0
